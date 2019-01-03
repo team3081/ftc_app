@@ -55,15 +55,15 @@ public class NewOmniLight extends OpMode{
             robot.leftRear.setPower(-leftx);//+
             robot.rightRear.setPower(-leftx);//+
         }else if(gamepad1.left_bumper){                     //spin left
-            robot.leftFront.setPower(-.5);//-
-            robot.rightFront.setPower(-.5);//-
-            robot.leftRear.setPower(-.5);//-
-            robot.rightRear.setPower(-.5);//-
+            robot.leftFront.setPower(-1);//-
+            robot.rightFront.setPower(-1);//-
+            robot.leftRear.setPower(-1);//-
+            robot.rightRear.setPower(-1);//-
         }else if(gamepad1.right_bumper) {                   //spin right
-            robot.leftFront.setPower(.5);//+
-            robot.rightFront.setPower(.5);//+
-            robot.leftRear.setPower(.5);//+
-            robot.rightRear.setPower(.5);//+
+            robot.leftFront.setPower(1);//+
+            robot.rightFront.setPower(1);//+
+            robot.leftRear.setPower(1);//+
+            robot.rightRear.setPower(1);//+
         }else{                                              //stop
             robot.leftFront.setPower(0);
             robot.rightFront.setPower(0);
@@ -89,13 +89,13 @@ public class NewOmniLight extends OpMode{
 
         if(gamepad2.dpad_up){                               //tube up
             robot.tube.setPower(1);
-        }else if(gamepad2. dpad_down){                       //tube down
+        }else if(gamepad2. dpad_down){                      //tube down
             robot.tube.setPower(-1);
         }else{                                              //stop
-
+            robot.tube.setPower(0);
         }
 
-        if(gamepad2.b){                                     //pop
+        if(gamepad2.y){                                     //pop
             robot.popper.setPower(1);
         }else if(gamepad2.x){                               //opposite pop
             robot.popper.setPower(-1);
@@ -103,9 +103,9 @@ public class NewOmniLight extends OpMode{
             robot.popper.setPower(0);
         }
 
-        if(gamepad2.y){                                     //lift up
+        if(gamepad1.dpad_up){                               //lift up
             robot.lift.setPower(1);
-        }else if(gamepad2.a){                               //lift down
+        }else if(gamepad1.dpad_down){                       //lift down
             robot.lift.setPower(-1);
         }else{                                              //stop
             robot.lift.setPower(0);
