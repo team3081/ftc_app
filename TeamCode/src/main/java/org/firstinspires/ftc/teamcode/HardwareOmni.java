@@ -18,7 +18,11 @@ public class HardwareOmni
     public DcMotor  slide       = null;
     public DcMotor  popper      = null;
     public DcMotor  lift        = null;
-    public CRServo  tube        = null;
+
+
+    public Servo    tube       = null;
+
+
 
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
@@ -37,7 +41,8 @@ public class HardwareOmni
         slide      = hwMap.get(DcMotor.class, "slide");
         popper     = hwMap.get(DcMotor.class, "popper");
         lift       = hwMap.get(DcMotor.class, "lift");
-        tube       = hwMap.get(CRServo.class, "tube");
+
+        tube      = hwMap.get(Servo.class, "servo");
 
         leftFront.setPower(0);
         rightFront.setPower(0);
@@ -47,7 +52,6 @@ public class HardwareOmni
         slide.setPower(0);
         popper.setPower(0);
         lift.setPower(0);
-        tube.setPower(0);
 
         leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -57,6 +61,7 @@ public class HardwareOmni
         slide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         popper.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
     }
 }
 

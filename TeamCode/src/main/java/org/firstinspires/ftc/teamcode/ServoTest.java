@@ -3,17 +3,20 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.util.Range;
 
 
-@TeleOp(name="NewOmniLight", group="Pushbot")
-public class NewOmniLight extends OpMode{
+@TeleOp(name="ServoTest", group="Pushbot")
+public class ServoTest extends OpMode{
 
     HardwareOmni robot       = new HardwareOmni();
+    final double    CLAW_SPEED  = 0.02 ;                 // sets rate to move servo
+    double position = 3;
 
     @Override
     public void init() {
         robot.init(hardwareMap);
+        robot.tube.setPosition(position);
         telemetry.addData("Say", "Hello Driver");    //
     }
     @Override
@@ -110,6 +113,17 @@ public class NewOmniLight extends OpMode{
         }else{                                              //stop
             robot.lift.setPower(0);
         }
+
+
+
+
+        // Use gamepad left & right Bumpers to open and close the claw
+        if (gamepad2.dpad_up) {
+            robot.tube.setPosition(.55);
+        }else if (gamepad2.dpad_down) {
+            robot.tube.setPosition(1);
+        }
+
 
 
         telemetry.addData("lefty",  "%.2f", lefty);
