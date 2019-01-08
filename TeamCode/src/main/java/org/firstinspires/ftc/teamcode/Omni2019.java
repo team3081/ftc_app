@@ -10,13 +10,9 @@ import com.qualcomm.robotcore.util.Range;
 public class ServoTest extends OpMode{
 
     HardwareOmni robot       = new HardwareOmni();
-    final double    CLAW_SPEED  = 0.02 ;                 // sets rate to move servo
-    double position = 3;
-
     @Override
     public void init() {
         robot.init(hardwareMap);
-        robot.tube.setPosition(position);
         telemetry.addData("Say", "Hello Driver");    //
     }
     @Override
@@ -57,16 +53,16 @@ public class ServoTest extends OpMode{
             robot.rightFront.setPower(leftx);//-
             robot.leftRear.setPower(-leftx);//+
             robot.rightRear.setPower(-leftx);//+
-        }else if(gamepad1.left_bumper){                     //spin left
-            robot.leftFront.setPower(-1);//-
-            robot.rightFront.setPower(-1);//-
-            robot.leftRear.setPower(-1);//-
-            robot.rightRear.setPower(-1);//-
-        }else if(gamepad1.right_bumper) {                   //spin right
-            robot.leftFront.setPower(1);//+
-            robot.rightFront.setPower(1);//+
-            robot.leftRear.setPower(1);//+
-            robot.rightRear.setPower(1);//+
+        }else if(gamepad1.right_stick_x < 0){                     //spin left
+            robot.leftFront.setPower(rightx);//-
+            robot.rightFront.setPower(rightx);//-
+            robot.leftRear.setPower(rightx);//-
+            robot.rightRear.setPower(rightx);//-
+        }else if(gamepad1.right_stick_x > 0) {                   //spin right
+            robot.leftFront.setPower(rightx);//+
+            robot.rightFront.setPower(rightx);//+
+            robot.leftRear.setPower(rightx);//+
+            robot.rightRear.setPower(rightx);//+
         }else{                                              //stop
             robot.leftFront.setPower(0);
             robot.rightFront.setPower(0);
@@ -90,13 +86,11 @@ public class ServoTest extends OpMode{
             robot.sweeper.setPower(0);
         }
 
-//        if(gamepad2.dpad_up){                               //tube up
-//            robot.tube.setPower(-1);
-//        }else if(gamepad2. dpad_down){                      //tube down
-//            robot.tube.setPower(1);
-//        }else{                                              //stop
-//            robot.tube.setPower(-0.1);
-//        }
+        if(gamepad2.dpad_up){                               //tube up
+            robot.tube.setPosition(.6);
+        }else if(gamepad2. dpad_down){                      //tube down
+            robot.tube.setPosition(0);
+        }
 
         if(gamepad2.y){                                     //pop
             robot.popper.setPower(1);
@@ -106,24 +100,13 @@ public class ServoTest extends OpMode{
             robot.popper.setPower(0);
         }
 
-        if(gamepad1.dpad_up){                               //lift up
+        if(gamepad1.right_bumper){                               //lift up
             robot.lift.setPower(-1);
-        }else if(gamepad1.dpad_down){                       //lift down
+        }else if(gamepad1.left_bumper){                       //lift down
             robot.lift.setPower(1);
         }else{                                              //stop
             robot.lift.setPower(0);
         }
-
-
-
-
-        // Use gamepad left & right Bumpers to open and close the claw
-        if (gamepad2.dpad_up) {
-            robot.tube.setPosition(.55);
-        }else if (gamepad2.dpad_down) {
-            robot.tube.setPosition(1);
-        }
-
 
 
         telemetry.addData("lefty",  "%.2f", lefty);
