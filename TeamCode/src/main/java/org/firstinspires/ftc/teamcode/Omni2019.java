@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
 
-@TeleOp(name="ServoTest", group="Pushbot")
-public class ServoTest extends OpMode{
+@TeleOp(name="Omni2019", group="Pushbot")
+public class Omni2019 extends OpMode{
 
     HardwareOmni robot       = new HardwareOmni();
     @Override
@@ -17,6 +17,8 @@ public class ServoTest extends OpMode{
     }
     @Override
     public void init_loop() {
+        robot.tube.setPosition(.4);
+
     }
 
     @Override
@@ -87,9 +89,9 @@ public class ServoTest extends OpMode{
         }
 
         if(gamepad2.dpad_up){                               //tube up
-            robot.tube.setPosition(.6);
+            robot.tube.setPosition(.4);
         }else if(gamepad2. dpad_down){                      //tube down
-            robot.tube.setPosition(0);
+            robot.tube.setPosition(1);
         }
 
         if(gamepad2.y){                                     //pop

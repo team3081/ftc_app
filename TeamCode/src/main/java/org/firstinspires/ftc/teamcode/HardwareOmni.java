@@ -19,7 +19,6 @@ public class HardwareOmni
     public DcMotor  popper      = null;
     public DcMotor  lift        = null;
 
-
     public Servo    tube       = null;
 
 
@@ -42,7 +41,7 @@ public class HardwareOmni
         popper     = hwMap.get(DcMotor.class, "popper");
         lift       = hwMap.get(DcMotor.class, "lift");
 
-        tube      = hwMap.get(Servo.class, "servo");
+        tube       = hwMap.get(Servo.class, "tube");
 
         leftFront.setPower(0);
         rightFront.setPower(0);
@@ -52,6 +51,8 @@ public class HardwareOmni
         slide.setPower(0);
         popper.setPower(0);
         lift.setPower(0);
+
+        tube.setPosition(1);
 
         leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
