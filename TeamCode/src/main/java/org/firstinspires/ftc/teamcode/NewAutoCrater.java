@@ -8,14 +8,15 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="NewAutoDepot", group="Pushbot")
+@Autonomous(name="NewAutoCrater", group="Pushbot")
 //@Disabled
-public class NewAutoDepot extends LinearOpMode {
+public class NewAutoCrater extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareOmni robot = new HardwareOmni();
     private ElapsedTime runtime = new ElapsedTime();
     private GoldAlignDetector detector;
+    double GoldPos;
 
     @Override
     public void runOpMode() {
@@ -24,8 +25,6 @@ public class NewAutoDepot extends LinearOpMode {
 
         telemetry.addData("Status", "Ready to run");
         telemetry.update();
-
-        waitForStart();
 
         detector = new GoldAlignDetector();
         detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());
@@ -47,12 +46,26 @@ public class NewAutoDepot extends LinearOpMode {
         telemetry.addData("IsAligned", detector.getAligned());
         telemetry.addData("X Pos", detector.getXPosition());
 
+        waitForStart();
+
+
+        if(detector.getXPosition() < 200){
+            GoldPos = 1;
+        }else if (detector.getXPosition() > 400){
+            GoldPos = 3;
+        }else if (detector.getXPosition() > 200 && detector.getXPosition() < 400){
+            GoldPos = 2;
+        }
+
+
         //lift up and tube up
         robot.lift.setPower(-1);
         robot.tube.setPosition(.45);
         runtime.reset();
         while(opModeIsActive() && (runtime.seconds() < 9.5)){
             telemetry.addData("Path", "Lift Up", runtime.seconds());
+            telemetry.addData("Gold Position", GoldPos);
+
             telemetry.update();
         }
         robot.lift.setPower(0);
@@ -90,7 +103,7 @@ public class NewAutoDepot extends LinearOpMode {
 
 
 
-        if(detector.getXPosition() < 200){  //gold is to the left
+        if(GoldPos < 200){  //gold is to the left
             //turn left
             robot.leftFront.setPower(-1);
             robot.rightFront.setPower(-1);
@@ -141,7 +154,7 @@ public class NewAutoDepot extends LinearOpMode {
                 telemetry.addData("Path", "Left Gold Leg 5", runtime.seconds());
                 telemetry.update();
             }
-        }else if (detector.getXPosition() > 400){//gold is to the right
+        }else if (GoldPos > 400){//gold is to the right
             //turn left
             robot.leftFront.setPower(-1);
             robot.rightFront.setPower(-1);
@@ -192,7 +205,7 @@ public class NewAutoDepot extends LinearOpMode {
                 telemetry.addData("Path", "Right Gold Leg 5", runtime.seconds());
                 telemetry.update();
             }
-        }else if (detector.getXPosition() > 200 && detector.getXPosition() < 400){//gold is in the center
+        }else if (GoldPos > 200 && GoldPos < 400){//gold is in the center
             //straight
             robot.leftFront.setPower(-1);
             robot.rightFront.setPower(-1);

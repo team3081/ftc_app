@@ -17,7 +17,7 @@ public class Omni2019 extends OpMode{
     }
     @Override
     public void init_loop() {
-        robot.tube.setPosition(.4);
+        robot.tube.setPosition(.45);
 
     }
 
@@ -92,6 +92,15 @@ public class Omni2019 extends OpMode{
             robot.tube.setPosition(.4);
         }else if(gamepad2. dpad_down){                      //tube down
             robot.tube.setPosition(1);
+        }
+
+        if(gamepad1.y){
+            robot.leftmarker.setPosition(1);                    //marker out
+            robot.rightmarker.setPosition(1);
+        }else if (gamepad1.a){
+            robot.leftmarker.setPosition(0);                    //marker in
+            robot.rightmarker.setPosition(0);
+
         }
 
         if(gamepad2.y){                                     //pop

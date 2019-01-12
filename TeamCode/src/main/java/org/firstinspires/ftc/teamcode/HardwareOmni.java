@@ -19,7 +19,9 @@ public class HardwareOmni
     public DcMotor  popper      = null;
     public DcMotor  lift        = null;
 
-    public Servo    tube       = null;
+    public Servo    tube        = null;
+    public Servo    leftmarker  = null;
+    public Servo    rightmarker = null;
 
 
 
@@ -42,6 +44,8 @@ public class HardwareOmni
         lift       = hwMap.get(DcMotor.class, "lift");
 
         tube       = hwMap.get(Servo.class, "tube");
+        leftmarker = hwMap.get(Servo.class, "leftmarker");
+        rightmarker= hwMap.get(Servo.class, "rightmarker");
 
         leftFront.setPower(0);
         rightFront.setPower(0);
@@ -53,6 +57,8 @@ public class HardwareOmni
         lift.setPower(0);
 
         tube.setPosition(1);
+        leftmarker.setPosition(0);
+        rightmarker.setPosition(0);
 
         leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
