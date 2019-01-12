@@ -50,6 +50,7 @@ public class NewAutoDepot extends LinearOpMode {
 
         robot.lift.setPower(-1);            //lift up
         robot.tube.setPosition(.4);         //tube up
+
         runtime.reset();
         while(opModeIsActive() && (runtime.seconds() < 9.5)){
             telemetry.addData("Path", "Lift Up", runtime.seconds());
@@ -58,29 +59,162 @@ public class NewAutoDepot extends LinearOpMode {
 
         robot.lift.setPower(0);
 
+        //straight
+        robot.leftFront.setPower(1);
+        robot.rightFront.setPower(-1);
+        robot.leftRear.setPower(1);
+        robot.rightRear.setPower(-1);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < .1)){
+            telemetry.addData("Path", "Unhook Leg 1", runtime.seconds());
+            telemetry.update();
+        }
+        //strafe left
+        robot.leftFront.setPower(-1);
+        robot.rightFront.setPower(-1);
+        robot.leftRear.setPower(1);
+        robot.rightRear.setPower(1);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < .1)){
+            telemetry.addData("Path", "Unhook Leg 2", runtime.seconds());
+            telemetry.update();
+        }
+        //backwards
+        robot.leftFront.setPower(-1);
+        robot.rightFront.setPower(1);
+        robot.leftRear.setPower(-1);
+        robot.rightRear.setPower(1);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < .1)){
+            telemetry.addData("Path", "Unhook Leg 3", runtime.seconds());
+            telemetry.update();
+        }
+
+
+
         if(detector.getXPosition() < 200){  //gold is to the left
             //turn left
-            robot.leftFront.setPower(-.25);
-            robot.rightFront.setPower(-.25);
-            robot.leftRear.setPower(-.25);
-            robot.rightRear.setPower(-.25);
+            robot.leftFront.setPower(-1);
+            robot.rightFront.setPower(-1);
+            robot.leftRear.setPower(-1);
+            robot.rightRear.setPower(-1);
             runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() < .356)){
+            while (opModeIsActive() && (runtime.seconds() < .890625)){
                 telemetry.addData("Path", "Left Gold Leg 1", runtime.seconds());
                 telemetry.update();
             }
-        }else if (detector.getXPosition() > 400){
-            //turn right
-            robot.leftFront.setPower(.25);
-            robot.rightFront.setPower(.25);
-            robot.leftRear.setPower(.25);
-            robot.rightRear.setPower(.25);
+            robot.leftFront.setPower(0);
+            robot.rightFront.setPower(0);
+            robot.leftRear.setPower(0);
+            robot.rightRear.setPower(0);
+
+            robot.slide.setPower(-1);
+            robot.sweeper.setPower(1);
             runtime.reset();
-            while (opModeIsActive() && (runtime.seconds() < .25)){
+            while (opModeIsActive() && (runtime.seconds() < .75)){
+                telemetry.addData("Path", "Left Gold Leg 2", runtime.seconds());
+                telemetry.update();
+            }
+            robot.sweeper.setPower(1);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < .5)){
+                telemetry.addData("Path", "Left Gold Leg 3", runtime.seconds());
+                telemetry.update();
+            }
+            robot.slide.setPower(1);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < .75)){
+                telemetry.addData("Path", "Left Gold Leg 4", runtime.seconds());
+                telemetry.update();
+            }
+            robot.leftFront.setPower(1);
+            robot.rightFront.setPower(1);
+            robot.leftRear.setPower(1);
+            robot.rightRear.setPower(1);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < .178125)){
+                telemetry.addData("Path", "Left Gold Leg 5", runtime.seconds());
+                telemetry.update();
+            }
+        }else if (detector.getXPosition() > 400){//gold is to the right
+            //turn left
+            robot.leftFront.setPower(-1);
+            robot.rightFront.setPower(-1);
+            robot.leftRear.setPower(-1);
+            robot.rightRear.setPower(-1);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < .534375)){
                 telemetry.addData("Path", "Right Gold Leg 1", runtime.seconds());
                 telemetry.update();
             }
-        }else if (detector.getXPosition() > 200 && detector.getXPosition() < 400){
+            robot.leftFront.setPower(0);
+            robot.rightFront.setPower(0);
+            robot.leftRear.setPower(0);
+            robot.rightRear.setPower(0);
+
+            robot.slide.setPower(-1);
+            robot.sweeper.setPower(1);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < .75)){
+                telemetry.addData("Path", "Right Gold Leg 2", runtime.seconds());
+                telemetry.update();
+            }
+            robot.sweeper.setPower(1);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < .5)){
+                telemetry.addData("Path", "Right Gold Leg 3", runtime.seconds());
+                telemetry.update();
+            }
+            robot.slide.setPower(1);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < .75)){
+                telemetry.addData("Path", "Right Gold Leg 4", runtime.seconds());
+                telemetry.update();
+            }
+            robot.leftFront.setPower(-1);
+            robot.rightFront.setPower(-1);
+            robot.leftRear.setPower(-1);
+            robot.rightRear.setPower(-1);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < .178125)){
+                telemetry.addData("Path", "Right Gold Leg 5", runtime.seconds());
+                telemetry.update();
+            }
+        }else if (detector.getXPosition() > 200 && detector.getXPosition() < 400){//gold is in the center
+            //straight
+            robot.leftFront.setPower(-1);
+            robot.rightFront.setPower(-1);
+            robot.leftRear.setPower(-1);
+            robot.rightRear.setPower(-1);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < .7125)){
+                telemetry.addData("Path", "Center Gold Leg 1", runtime.seconds());
+                telemetry.update();
+            }
+            robot.leftFront.setPower(0);
+            robot.rightFront.setPower(0);
+            robot.leftRear.setPower(0);
+            robot.rightRear.setPower(0);
+
+            robot.slide.setPower(-1);
+            robot.sweeper.setPower(1);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < .75)){
+                telemetry.addData("Path", "Center Gold Leg 2", runtime.seconds());
+                telemetry.update();
+            }
+            robot.sweeper.setPower(1);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < .5)){
+                telemetry.addData("Path", "Center Gold Leg 3", runtime.seconds());
+                telemetry.update();
+            }
+            robot.slide.setPower(1);
+            runtime.reset();
+            while (opModeIsActive() && (runtime.seconds() < .75)){
+                telemetry.addData("Path", "Center Gold Leg 4", runtime.seconds());
+                telemetry.update();
+            }
 
         }
 

@@ -32,7 +32,7 @@ public class Omni2019 extends OpMode{
         double lefty = gamepad1.left_stick_y;
         double rightx = gamepad1.right_stick_x;
         double righty = gamepad1.right_stick_y;
-        double slide = gamepad2.left_stick_y;
+        double slide = -gamepad2.left_stick_y;
 
 
         if(gamepad1.left_stick_y < 0){                      //backward

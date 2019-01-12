@@ -26,9 +26,9 @@ public class AutoTests extends LinearOpMode {
         telemetry.update();
 
         waitForStart();
-//Tings to note:
+        //Tings to note:
         //1 sec forward == about 3 feet at full power
-        //
+        //2.85 sec turn == 360 turn
 
 
 
