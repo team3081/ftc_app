@@ -222,14 +222,14 @@ public class NewAutoDepot extends LinearOpMode {
 
             //slide out and sweeper on
             robot.slide.setPower(-1);
-            robot.sweeper.setPower(1);
+            robot.sweeper.setPower(-1);
             runtime.reset();
             while (opModeIsActive() && (runtime.seconds() < .5)){
                 telemetry.addData("Path", "Center Gold Leg 2", runtime.seconds());
                 telemetry.update();
             }
             //sweeper continues
-            robot.sweeper.setPower(1);
+            robot.sweeper.setPower(-1);
             runtime.reset();
             while (opModeIsActive() && (runtime.seconds() < .5)){
                 telemetry.addData("Path", "Center Gold Leg 3", runtime.seconds());
@@ -246,6 +246,9 @@ public class NewAutoDepot extends LinearOpMode {
             robot.sweeper.setPower(0);
 
         }
+
+
+        
 
         //straight
         robot.leftFront.setPower(1);

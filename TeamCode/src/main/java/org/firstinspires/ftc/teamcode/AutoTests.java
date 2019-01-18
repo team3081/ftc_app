@@ -17,6 +17,7 @@ public class AutoTests extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private GoldAlignDetector detector;
 
+
     @Override
     public void runOpMode() {
 
@@ -26,29 +27,16 @@ public class AutoTests extends LinearOpMode {
         telemetry.update();
 
         waitForStart();
+
+
         //Tings to note:
         //1 sec forward == about 3 feet at full power
         //2.85 sec turn == 360 turn
 
 
+        robot.forward(1.0, "Forward");
 
-
-        robot.leftFront.setPower(-1);
-        robot.rightFront.setPower(-1);
-        robot.leftRear.setPower(-1);
-        robot.rightRear.setPower(-1);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 2.85)){
-            telemetry.addData("Path", "Left Gold Leg 1", runtime.seconds());
-            telemetry.update();
-        }
-
-
-
-
-
-
-
+        robot.backward(1.0, "Backward");
 
 
             robot.rightFront.setPower(0);

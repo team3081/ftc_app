@@ -73,17 +73,17 @@ public class Omni2019 extends OpMode{
         }
 
         if(gamepad2.left_stick_y > 0){                      //slide out
-            robot.slide.setPower(slide);
+            robot.slide.setPower(slide);//-
         }else if(gamepad2.left_stick_y < 0){                //slide in
-            robot.slide.setPower(slide);
+            robot.slide.setPower(slide);//+
         }else{                                              //stop
             robot.slide.setPower(0);
         }
 
         if(gamepad2.right_bumper){                          //sweep in
-            robot.sweeper.setPower(1);
-        }else if(gamepad2.left_bumper){                     //sweep out
             robot.sweeper.setPower(-1);
+        }else if(gamepad2.left_bumper){                     //sweep out
+            robot.sweeper.setPower(1);
         }else{                                              //stop
             robot.sweeper.setPower(0);
         }

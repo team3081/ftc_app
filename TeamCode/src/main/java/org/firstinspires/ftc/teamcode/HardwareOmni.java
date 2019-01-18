@@ -7,6 +7,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+
+
+
 public class HardwareOmni
 {
     /* Public OpMode members. */
@@ -66,9 +69,124 @@ public class HardwareOmni
         rightRear.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         sweeper.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         slide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        popper.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        popper.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
+
+
+    public void forward(Double time, String stage){
+        ElapsedTime runtime = new ElapsedTime();
+        while (runtime.seconds() < time){
+            leftFront.setPower(-1); //-
+            rightFront.setPower(1); //+
+            leftRear.setPower(-1); //-
+            rightRear.setPower(1); //+
+
+        }
+    }
+
+    public void backward(Double time, String stage){
+        ElapsedTime runtime = new ElapsedTime();
+        while (runtime.seconds() < time){
+            leftFront.setPower(1); //+
+            rightFront.setPower(-1); //-
+            leftRear.setPower(1); //+
+            rightRear.setPower(-1); //-
+        }
+    }
+
+    public void strafeleft(Double time, String stage){
+        ElapsedTime runtime = new ElapsedTime();
+        while (runtime.seconds() < time){
+            leftFront.setPower(-1);//-
+            rightFront.setPower(-1);//-
+            leftRear.setPower(1);//+
+            rightRear.setPower(1);//+
+        }
+    }
+
+    public void straferight(Double time, String stage){
+        ElapsedTime runtime = new ElapsedTime();
+        while (runtime.seconds() < time){
+            leftFront.setPower(1);//+
+            rightFront.setPower(1);//+
+            leftRear.setPower(-1);//-
+            rightRear.setPower(-1);//-
+        }
+    }
+
+    public void turnleft(Double time, String stage){
+        ElapsedTime runtime = new ElapsedTime();
+        while (runtime.seconds() < time){
+            leftFront.setPower(-1);//-
+            rightFront.setPower(-1);//-
+            leftRear.setPower(-1);//-
+            rightRear.setPower(-1);//-
+        }
+    }
+
+    public void turnright(Double time, String stage){
+        ElapsedTime runtime = new ElapsedTime();
+        while (runtime.seconds() < time){
+            leftFront.setPower(1);//+
+            rightFront.setPower(1);//+
+            leftRear.setPower(1);//+
+            rightRear.setPower(1);//+
+        }
+    }
+
+    public void stop(Double time, String stage){
+        ElapsedTime runtime = new ElapsedTime();
+        while (runtime.seconds() < time){
+            leftFront.setPower(0);
+            rightFront.setPower(0);
+            leftRear.setPower(0);
+            rightRear.setPower(0);
+            sweeper.setPower(0);
+            slide.setPower(0);
+            popper.setPower(0);
+            lift.setPower(0);
+        }
+    }
+
+    public void slideandsweepout(Double time, String stage){
+        ElapsedTime runtime = new ElapsedTime();
+        while (runtime.seconds() < time){
+            slide.setPower(-1);//-
+            sweeper.setPower(-1);//-
+        }
+    }
+
+    public void slideandsweepin(Double time, String stage){
+        ElapsedTime runtime = new ElapsedTime();
+        while (runtime.seconds() < time){
+            slide.setPower(1);//+
+            sweeper.setPower(-1);//-
+        }
+    }
+
+    public void sweepin(Double time, String stage){
+        ElapsedTime runtime = new ElapsedTime();
+        while (runtime.seconds() < time){
+            sweeper.setPower(-1);//-
+        }
+    }
+
+    public void sweepout(Double time, String stage){
+        ElapsedTime runtime = new ElapsedTime();
+        while (runtime.seconds() < time){
+            sweeper.setPower(1);//+
+        }
+    }
+
+    public void pop(Double time, String stage){
+        ElapsedTime runtime = new ElapsedTime();
+        while (runtime.seconds() < time){
+
+        }
+    }
+
+
 }
 
