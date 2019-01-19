@@ -6,6 +6,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+
 
 
 
@@ -75,18 +78,17 @@ public class HardwareOmni
     }
 
 
-    public void forward(Double time, String stage){
+    public void forward(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
             leftFront.setPower(-1); //-
             rightFront.setPower(1); //+
             leftRear.setPower(-1); //-
             rightRear.setPower(1); //+
-
         }
     }
 
-    public void backward(Double time, String stage){
+    public void backward(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
             leftFront.setPower(1); //+
@@ -96,7 +98,7 @@ public class HardwareOmni
         }
     }
 
-    public void strafeleft(Double time, String stage){
+    public void strafeleft(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
             leftFront.setPower(-1);//-
@@ -106,7 +108,7 @@ public class HardwareOmni
         }
     }
 
-    public void straferight(Double time, String stage){
+    public void straferight(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
             leftFront.setPower(1);//+
@@ -116,7 +118,7 @@ public class HardwareOmni
         }
     }
 
-    public void turnleft(Double time, String stage){
+    public void turnleft(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
             leftFront.setPower(-1);//-
@@ -126,7 +128,7 @@ public class HardwareOmni
         }
     }
 
-    public void turnright(Double time, String stage){
+    public void turnright(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
             leftFront.setPower(1);//+
@@ -136,7 +138,7 @@ public class HardwareOmni
         }
     }
 
-    public void stop(Double time, String stage){
+    public void sleep(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
             leftFront.setPower(0);
@@ -150,7 +152,7 @@ public class HardwareOmni
         }
     }
 
-    public void slideandsweepout(Double time, String stage){
+    public void slideandsweepout(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
             slide.setPower(-1);//-
@@ -158,7 +160,7 @@ public class HardwareOmni
         }
     }
 
-    public void slideandsweepin(Double time, String stage){
+    public void slideandsweepin(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
             slide.setPower(1);//+
@@ -166,27 +168,34 @@ public class HardwareOmni
         }
     }
 
-    public void sweepin(Double time, String stage){
+    public void sweepin(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
             sweeper.setPower(-1);//-
         }
     }
 
-    public void sweepout(Double time, String stage){
+    public void sweepout(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
             sweeper.setPower(1);//+
         }
     }
 
-    public void pop(Double time, String stage){
+    public void pop(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
-
+            popper.setPower(-1);
         }
     }
 
+    public void startauto(Double time){
+        ElapsedTime runtime = new ElapsedTime();
+        while (runtime.seconds() < time){
+            lift.setPower(-1);
+            tube.setPosition(.41);
+        }
+    }
 
 }
 

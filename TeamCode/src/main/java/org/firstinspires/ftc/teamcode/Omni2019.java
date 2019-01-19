@@ -1,32 +1,76 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
+
+import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+
+
 
 
 @TeleOp(name="Omni2019", group="Pushbot")
 public class Omni2019 extends OpMode{
 
     HardwareOmni robot       = new HardwareOmni();
+    MediaPlayer mediaPlayer;
+
+
     @Override
     public void init() {
         robot.init(hardwareMap);
-        telemetry.addData("Say", "Hello Driver");    //
+        mediaPlayer = MediaPlayer.create(hardwareMap.appContext, R.raw.avengers);
+        telemetry.addData("Say", "Hello Driver");
     }
     @Override
     public void init_loop() {
-        robot.tube.setPosition(.45);
-
+        robot.tube.setPosition(.41);
     }
 
     @Override
     public void start() {
-    }
 
+    }
+    String AA;
+    int counter = 0;
     @Override
     public void loop() {
+
+
+        if(gamepad1.back && gamepad1.x){
+            mediaPlayer.start();
+        }
+
+        if(gamepad1.back && gamepad1.y){
+            mediaPlayer.pause();
+        }
+
+        if(gamepad1.back && gamepad1.a){
+            mediaPlayer.seekTo(0);
+        }
+
+        if(gamepad1.back && gamepad1.b){
+            mediaPlayer.seekTo(31600);
+            mediaPlayer.start();
+            AA = "Avengers Assemble!";
+        }
+
+        if(gamepad1.dpad_up){
+            mediaPlayer.setVolume(1,1);
+        }
+
+        if(gamepad1.dpad_down){
+            mediaPlayer.setVolume(0,0);
+        }
+
+
+
 
         double leftx = gamepad1.left_stick_x;
         double lefty = gamepad1.left_stick_y;
@@ -89,7 +133,7 @@ public class Omni2019 extends OpMode{
         }
 
         if(gamepad2.dpad_up){                               //tube up
-            robot.tube.setPosition(.4);
+            robot.tube.setPosition(.41);
         }else if(gamepad2. dpad_down){                      //tube down
             robot.tube.setPosition(1);
         }
@@ -103,10 +147,10 @@ public class Omni2019 extends OpMode{
 
         }
 
-        if(gamepad2.y){                                     //pop
-            robot.popper.setPower(1);
-        }else if(gamepad2.x){                               //opposite pop
+        if(gamepad2.x){                                     //pop
             robot.popper.setPower(-1);
+        }else if(gamepad2.a){                               //opposite pop
+            robot.popper.setPower(1);
         }else{                                              //stop
             robot.popper.setPower(0);
         }
@@ -123,9 +167,13 @@ public class Omni2019 extends OpMode{
         telemetry.addData("lefty",  "%.2f", lefty);
         telemetry.addData("leftx", "%.2f", leftx);
         telemetry.addData("rightx", "%.2f", rightx);
+        telemetry.addData("", AA);
+
+
     }
 
     @Override
     public void stop() {
+        mediaPlayer.stop();
     }
 }

@@ -7,6 +7,7 @@ import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.ftccommon.SoundPlayer;
 
 @Autonomous(name="AutoTests", group="Pushbot")
 //@Disabled
@@ -18,36 +19,34 @@ public class AutoTests extends LinearOpMode {
     private GoldAlignDetector detector;
 
 
+
+
+
     @Override
     public void runOpMode() {
 
         robot.init(hardwareMap);
-
         telemetry.addData("Status", "Ready to run");
         telemetry.update();
 
         waitForStart();
 
-
-        //Tings to note:
+        //Things to note:
         //1 sec forward == about 3 feet at full power
         //2.85 sec turn == 360 turn
 
 
-        robot.forward(1.0, "Forward");
+        robot.forward(1.0);
+        telemetry.addData("Path", "Forward");
 
-        robot.backward(1.0, "Backward");
+
+        robot.backward(1.0);
+        telemetry.addData("Path", "Backward");
 
 
-            robot.rightFront.setPower(0);
-            robot.rightRear.setPower(0);
-            robot.leftFront.setPower(0);
-            robot.leftRear.setPower(0);
-            robot.lift.setPower(0);
+        robot.sleep(1.0);
+        telemetry.addData("Path", "Sleep");
 
-            telemetry.addData("Path", "Complete");
-            telemetry.update();
-            sleep(1000);
     }
 }
 
