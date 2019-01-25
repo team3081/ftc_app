@@ -1,22 +1,15 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
 
-import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.Range;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 
-
-
-
-@TeleOp(name="Omni2019", group="Pushbot")
-public class Omni2019 extends OpMode{
+@TeleOp(name="Omni2019Encoder", group="Pushbot")
+public class Omni2019Encoder extends OpMode{
 
     HardwareOmni robot       = new HardwareOmni();
     MediaPlayer mediaPlayer;
@@ -38,6 +31,7 @@ public class Omni2019 extends OpMode{
 
     }
     String AA;
+    int counter = 0;
     @Override
     public void loop() {
 
@@ -93,13 +87,11 @@ public class Omni2019 extends OpMode{
             robot.rightFront.setPower(leftx);//+
             robot.leftRear.setPower(-leftx);//-
             robot.rightRear.setPower(-leftx);//-
-            lefty = 0;
         }else if(gamepad1.left_stick_x < 0) {               //strafe left
             robot.leftFront.setPower(leftx);//-
             robot.rightFront.setPower(leftx);//-
             robot.leftRear.setPower(-leftx);//+
             robot.rightRear.setPower(-leftx);//+
-            lefty = 0;
         }else if(gamepad1.right_stick_x < 0){                     //spin left
             robot.leftFront.setPower(rightx);//-
             robot.rightFront.setPower(rightx);//-
@@ -136,7 +128,7 @@ public class Omni2019 extends OpMode{
         if(gamepad2.dpad_up){                               //tube up
             robot.tube.setPosition(.41);
         }else if(gamepad2. dpad_down){                      //tube down
-            robot.tube.setPosition(.975);
+            robot.tube.setPosition(1);
         }
 
         if(gamepad1.y){
@@ -148,14 +140,13 @@ public class Omni2019 extends OpMode{
 
         }
 
-
+        int position = 0;
 
         if(gamepad2.x){                                     //pop
-            robot.popper.setPower(-1);
-        }else if(gamepad2.a){                               //opposite pop
-            robot.popper.setPower(1);
-        }else{                                              //stop
-            robot.popper.setPower(0);
+            robot.popper.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            robot.popper.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            position = position + 1220;
+            robot.popper.setTargetPosition(position);
         }
 
 

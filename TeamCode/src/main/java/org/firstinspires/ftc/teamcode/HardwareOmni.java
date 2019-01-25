@@ -62,7 +62,7 @@ public class HardwareOmni
         popper.setPower(0);
         lift.setPower(0);
 
-        tube.setPosition(1);
+        tube.setPosition(.975);
         leftmarker.setPosition(0);
         rightmarker.setPosition(0);
 
@@ -72,11 +72,20 @@ public class HardwareOmni
         rightRear.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         sweeper.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         slide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        popper.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        popper.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+
 
     }
 
+
+    public void rotpop(Double time) {
+        ElapsedTime runtime = new ElapsedTime();
+        while (runtime.seconds() < time) {
+
+        }
+    }
 
     public void forward(Double time){
         ElapsedTime runtime = new ElapsedTime();

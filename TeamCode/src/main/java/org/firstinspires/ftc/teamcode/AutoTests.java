@@ -47,6 +47,17 @@ public class AutoTests extends LinearOpMode {
         robot.sleep(1.0);
         telemetry.addData("Path", "Sleep");
 
+
+        int position = 0;
+        position = position +1220;
+        robot.popper.setTargetPosition(position);
+
+        robot.sleep(1000.0);
+
+        position = position +1220;
+        robot.popper.setTargetPosition(position + 1220);
+
+
     }
 }
 
