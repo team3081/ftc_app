@@ -294,7 +294,7 @@ public class AutoStartDepot extends LinearOpMode {
                 telemetry.addData("Path", "Right Gold Leg 8", runtime.seconds());
                 telemetry.update();
             }
-
+   
 
         }else if (detector.getXPosition() > 200 && detector.getXPosition() < 400){      //Gold is in Center spot
             //straight
