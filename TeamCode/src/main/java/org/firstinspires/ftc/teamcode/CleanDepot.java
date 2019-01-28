@@ -50,16 +50,16 @@ public class CleanDepot extends LinearOpMode {
 
 
         if(detector.getXPosition() < 200){
-            GoldPos = 1;
+            GoldPos = 1;                    //left
         }else if (detector.getXPosition() > 400){
-            GoldPos = 3;
+            GoldPos = 3;                     //right
         }else if (detector.getXPosition() > 200 && detector.getXPosition() < 400){
-            GoldPos = 2;
+            GoldPos = 2;                     //center
         }
         telemetry.addData("Gold Position: ", GoldPos);
 
 
-        robot.startauto(9.5);
+        robot.startauto(5.8);
         telemetry.addData("Stage: ", "Lower Boot and Lift Tube");
 
         robot.backward(.1);

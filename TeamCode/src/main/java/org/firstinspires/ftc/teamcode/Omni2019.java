@@ -75,7 +75,7 @@ public class Omni2019 extends OpMode{
         double lefty = gamepad1.left_stick_y;
         double rightx = gamepad1.right_stick_x;
         double righty = gamepad1.right_stick_y;
-        double slide = -gamepad2.left_stick_y;
+        double slide = -gamepad2.left_stick_y * .75;
 
 
         if(gamepad1.left_stick_y < 0){                      //backward
@@ -88,18 +88,18 @@ public class Omni2019 extends OpMode{
             robot.rightFront.setPower(lefty); //+
             robot.leftRear.setPower(-lefty); //-
             robot.rightRear.setPower(lefty); //+
-        }else if(gamepad1.left_stick_x > 0){                //strafe right
+        }else if(gamepad1.left_stick_x > 0){//strafe right
+            lefty = 0;
             robot.leftFront.setPower(leftx);//+
             robot.rightFront.setPower(leftx);//+
             robot.leftRear.setPower(-leftx);//-
             robot.rightRear.setPower(-leftx);//-
-            lefty = 0;
         }else if(gamepad1.left_stick_x < 0) {               //strafe left
+            lefty = 0;
             robot.leftFront.setPower(leftx);//-
             robot.rightFront.setPower(leftx);//-
             robot.leftRear.setPower(-leftx);//+
             robot.rightRear.setPower(-leftx);//+
-            lefty = 0;
         }else if(gamepad1.right_stick_x < 0){                     //spin left
             robot.leftFront.setPower(rightx);//-
             robot.rightFront.setPower(rightx);//-
@@ -119,7 +119,7 @@ public class Omni2019 extends OpMode{
 
         if(gamepad2.left_stick_y > 0){                      //slide out
             robot.slide.setPower(slide);//-
-        }else if(gamepad2.left_stick_y < 0){                //slide in
+        }else if(gamepad2.left_stick_y <  0){                //slide in
             robot.slide.setPower(slide);//+
         }else{                                              //stop
             robot.slide.setPower(0);
@@ -140,11 +140,11 @@ public class Omni2019 extends OpMode{
         }
 
         if(gamepad1.y){
-            robot.leftmarker.setPosition(1);                    //marker out
-            robot.rightmarker.setPosition(1);
+            robot.marker.setPosition(1);                    //marker out
+            robot.marker.setPosition(1);
         }else if (gamepad1.a){
-            robot.leftmarker.setPosition(0);                    //marker in
-            robot.rightmarker.setPosition(0);
+            robot.marker.setPosition(0);                    //marker in
+            robot.marker.setPosition(0);
 
         }
 

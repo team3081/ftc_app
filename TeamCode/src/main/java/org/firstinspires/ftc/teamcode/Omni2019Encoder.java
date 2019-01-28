@@ -132,11 +132,11 @@ public class Omni2019Encoder extends OpMode{
         }
 
         if(gamepad1.y){
-            robot.leftmarker.setPosition(1);                    //marker out
-            robot.rightmarker.setPosition(1);
+            robot.marker.setPosition(1);                    //marker out
+            robot.marker.setPosition(1);
         }else if (gamepad1.a){
-            robot.leftmarker.setPosition(0);                    //marker in
-            robot.rightmarker.setPosition(0);
+            robot.marker.setPosition(0);                    //marker in
+            robot.marker.setPosition(0);
 
         }
 

@@ -26,8 +26,7 @@ public class HardwareOmni
     public DcMotor  lift        = null;
 
     public Servo    tube        = null;
-    public Servo    leftmarker  = null;
-    public Servo    rightmarker = null;
+    public Servo    marker  = null;
 
 
 
@@ -50,8 +49,7 @@ public class HardwareOmni
         lift       = hwMap.get(DcMotor.class, "lift");
 
         tube       = hwMap.get(Servo.class, "tube");
-        leftmarker = hwMap.get(Servo.class, "leftmarker");
-        rightmarker= hwMap.get(Servo.class, "rightmarker");
+        marker = hwMap.get(Servo.class, "leftmarker");
 
         leftFront.setPower(0);
         rightFront.setPower(0);
@@ -63,8 +61,7 @@ public class HardwareOmni
         lift.setPower(0);
 
         tube.setPosition(.975);
-        leftmarker.setPosition(0);
-        rightmarker.setPosition(0);
+        marker.setPosition(.5);
 
         leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -87,7 +84,7 @@ public class HardwareOmni
         }
     }
 
-    public void forward(Double time){
+    public void backward(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
             leftFront.setPower(-1); //-
@@ -97,7 +94,7 @@ public class HardwareOmni
         }
     }
 
-    public void backward(Double time){
+    public void forward(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
             leftFront.setPower(1); //+
@@ -164,7 +161,7 @@ public class HardwareOmni
     public void slideandsweepout(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
-            slide.setPower(-1);//-
+            slide.setPower(-.75);//-
             sweeper.setPower(-1);//-
         }
     }
@@ -172,7 +169,7 @@ public class HardwareOmni
     public void slideandsweepin(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
-            slide.setPower(1);//+
+            slide.setPower(.75);//+
             sweeper.setPower(-1);//-
         }
     }
@@ -205,6 +202,14 @@ public class HardwareOmni
             tube.setPosition(.41);
         }
     }
+
+    public void drop(Double time){
+        ElapsedTime runtime = new ElapsedTime();
+        while (runtime.seconds() < time){
+            marker.setPosition(0);
+        }
+    }
+
 
 }
 
