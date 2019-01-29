@@ -199,7 +199,7 @@ public class HardwareOmni
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
             lift.setPower(-1);
-            tube.setPosition(.41);
+            //tube.setPosition(.41);
         }
     }
 
