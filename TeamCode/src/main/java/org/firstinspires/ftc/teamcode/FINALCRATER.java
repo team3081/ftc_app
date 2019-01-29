@@ -174,7 +174,7 @@ public class FINALCRATER extends LinearOpMode {
 
         robot.forward(1.5);
         telemetry.addData("Stage: ", "Forward");
-                robot.sleep(.01);
+                robot.sleep(.1);
 
         robot.drop(1.0);
         telemetry.addData("Stage: ", "Drop");
