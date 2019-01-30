@@ -61,7 +61,7 @@ public class HardwareOmni
         lift.setPower(0);
 
         tube.setPosition(.975);
-        marker.setPosition(.5);
+        marker.setPosition(.6);
 
         leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -161,7 +161,7 @@ public class HardwareOmni
     public void slideandsweepout(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
-            slide.setPower(-.75);//-
+            slide.setPower(-1);//-
             sweeper.setPower(-1);//-
         }
     }
@@ -169,7 +169,7 @@ public class HardwareOmni
     public void slideandsweepin(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
-            slide.setPower(.75);//+
+            slide.setPower(1);//+
             sweeper.setPower(-1);//-
         }
     }

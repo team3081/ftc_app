@@ -32,7 +32,7 @@ public class Omni2019 extends OpMode{
     public void init_loop() {
         robot.tube.setPosition(.41);
     }
-    double position = .5;
+    double position = .6;
 
 
     @Override

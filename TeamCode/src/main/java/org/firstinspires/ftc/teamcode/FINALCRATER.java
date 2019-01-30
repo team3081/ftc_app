@@ -76,7 +76,7 @@ public class FINALCRATER extends LinearOpMode {
             telemetry.addData("Stage: ", "Left Turn");
                     robot.sleep(.1);
 
-            robot.slideandsweepout(2.7);
+            robot.slideandsweepout(1.6);
             telemetry.addData("Stage: ", "Slide Out and Sweep in");
                     robot.sleep(.1);
 
@@ -84,7 +84,7 @@ public class FINALCRATER extends LinearOpMode {
             telemetry.addData("Stage: ", "Continue Sweeping in");
                     robot.sleep(.1);
 
-            robot.slideandsweepin(2.65);
+            robot.slideandsweepin(1.5);
             telemetry.addData("Stage: ", "Slide in and Sweep in");
                     robot.sleep(.1);
 
@@ -97,11 +97,11 @@ public class FINALCRATER extends LinearOpMode {
                     robot.sleep(.1);
 
         }else if (GoldPos == 3){//gold is to the right
-            robot.turnleft(.4);
+            robot.turnleft(.37);
             telemetry.addData("Stage: ", "Turn Left");
                     robot.sleep(1.0);
 
-            robot.slideandsweepout(2.7);
+            robot.slideandsweepout(1.6);
             telemetry.addData("Stage: ", "Slide Out and Sweeper Out");
                     robot.sleep(.1);
 
@@ -109,7 +109,7 @@ public class FINALCRATER extends LinearOpMode {
             telemetry.addData("Stage: ", "Continue Sweeping in");
                     robot.sleep(.1);
 
-            robot.slideandsweepin(2.65);
+            robot.slideandsweepin(1.5);
             telemetry.addData("Stage: ", "Slide in and Sweep in");
                     robot.sleep(.1);
 
@@ -117,16 +117,16 @@ public class FINALCRATER extends LinearOpMode {
             telemetry.addData("Stage: ", "Continue Sweeping in");
                     robot.sleep(.1);
 
-            robot.turnleft(.1);
+            robot.turnleft(.15);
             telemetry.addData("Stage: ", "Turn Left");
                     robot.sleep(1.0);
 
         }else if (GoldPos == 2){//gold is in the center
-            robot.turnleft(.68);
+            robot.turnleft(.69);
             telemetry.addData("Stage: ", "Turn Left");
                     robot.sleep(1.0);
 
-            robot.slideandsweepout(2.7);
+            robot.slideandsweepout(1.2);
             telemetry.addData("Stage: ", "Slide Out and Sweep in");
                     robot.sleep(.1);
 
@@ -134,45 +134,50 @@ public class FINALCRATER extends LinearOpMode {
             telemetry.addData("Stage: ", "Continue Sweeping in");
                     robot.sleep(.1);
 
-            robot.slideandsweepin(2.65);
+            robot.slideandsweepin(1.2);
             telemetry.addData("Stage: ", "Slide in and Sweep in");
                     robot.sleep(.1);
 
             robot.sweepin(2.0);
             telemetry.addData("Stage: ", "Continue Sweeping in");
-                    robot.sleep(1.0);
+                    robot.sleep(.1);
+
+            robot.turnright(.1);
+            telemetry.addData("Stage: ", "Turn Right");
+                    robot.sleep(.5);
+
 
         }
 
         robot.strafeleft(.3);
         telemetry.addData("Stage: ", "Strafe Left");
-                robot.sleep(.1);
+                robot.sleep(.3);
 
-        robot.backward(.07);
-        telemetry.addData("Stage: ", "Back");
-                robot.sleep(.1);
+//        robot.backward(.07);
+//        telemetry.addData("Stage: ", "Back");
+//                robot.sleep(.1);
+//
+//        robot.pop(1.0);
+//        telemetry.addData("Stage: ", "Pop");
+//                robot.sleep(.1);
+//
+//        robot.forward(.1);
+//        telemetry.addData("Stage: ", "Forward");
+//                robot.sleep(.1);
 
-        robot.pop(1.0);
-        telemetry.addData("Stage: ", "Pop");
-                robot.sleep(.1);
-
-        robot.forward(.1);
-        telemetry.addData("Stage: ", "Forward");
-                robot.sleep(.1);
-
-        robot.turnleft(.4);
+        robot.turnleft(.38);
         telemetry.addData("Stage: ", "Turn Left");
                 robot.sleep(.1);
 
-        robot.forward(.9);
+        robot.forward(1.22);
         telemetry.addData("Stage: ", "Forward");
                 robot.sleep(.1);
 
-        robot.turnleft(.45);
+        robot.turnleft(.56);
         telemetry.addData("Stage: ", "Turn Left");
                 robot.sleep(.1);
 
-        robot.forward(1.5);
+        robot.forward(1.6);
         telemetry.addData("Stage: ", "Forward");
                 robot.sleep(.1);
 
@@ -180,11 +185,7 @@ public class FINALCRATER extends LinearOpMode {
         telemetry.addData("Stage: ", "Drop");
                 robot.sleep(.1);
 
-        robot.turnright(1.4);
-        telemetry.addData("Stage: ", "Turn Right");
-                robot.sleep(.1);
-
-        robot.forward(1.8);
+        robot.backward(1.9);
         telemetry.addData("Stage: ", "Forward");
                 robot.sleep(1.0);
 
