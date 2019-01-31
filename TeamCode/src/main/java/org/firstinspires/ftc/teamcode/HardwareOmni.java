@@ -206,7 +206,7 @@ public class HardwareOmni
     public void drop(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
-            marker.setPosition(0);
+            marker.setPosition(.2);
         }
     }
 

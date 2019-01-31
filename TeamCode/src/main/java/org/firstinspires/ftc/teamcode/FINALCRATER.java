@@ -72,7 +72,7 @@ public class FINALCRATER extends LinearOpMode {
 
 
         if(GoldPos == 1){  //gold is to the left
-            robot.turnleft(.9);
+            robot.turnleft(.94);
             telemetry.addData("Stage: ", "Left Turn");
                     robot.sleep(.1);
 
@@ -80,24 +80,24 @@ public class FINALCRATER extends LinearOpMode {
             telemetry.addData("Stage: ", "Slide Out and Sweep in");
                     robot.sleep(.1);
 
-            robot.sweepin(1.0);
-            telemetry.addData("Stage: ", "Continue Sweeping in");
-                    robot.sleep(.1);
+//            robot.sweepin(1.0);
+//            telemetry.addData("Stage: ", "Continue Sweeping in");
+//                    robot.sleep(.1);
 
             robot.slideandsweepin(1.5);
             telemetry.addData("Stage: ", "Slide in and Sweep in");
                     robot.sleep(.1);
 
-            robot.sweepin(1.5);
-            telemetry.addData("Stage: ", "Continue Sweeping in");
-                    robot.sleep(.1);
+//            robot.sweepin(1.5);
+//            telemetry.addData("Stage: ", "Continue Sweeping in");
+//                    robot.sleep(.1);
 
             robot.turnright(.2);
             telemetry.addData("Stage: ", "Turn Right");
                     robot.sleep(.1);
 
         }else if (GoldPos == 3){//gold is to the right
-            robot.turnleft(.37);
+            robot.turnleft(.45);
             telemetry.addData("Stage: ", "Turn Left");
                     robot.sleep(1.0);
 
@@ -105,19 +105,19 @@ public class FINALCRATER extends LinearOpMode {
             telemetry.addData("Stage: ", "Slide Out and Sweeper Out");
                     robot.sleep(.1);
 
-            robot.sweepin(1.0);
-            telemetry.addData("Stage: ", "Continue Sweeping in");
-                    robot.sleep(.1);
+//            robot.sweepin(1.0);
+//            telemetry.addData("Stage: ", "Continue Sweeping in");
+//                    robot.sleep(.1);
 
             robot.slideandsweepin(1.5);
             telemetry.addData("Stage: ", "Slide in and Sweep in");
                     robot.sleep(.1);
 
-            robot.sweepin(1.5);
-            telemetry.addData("Stage: ", "Continue Sweeping in");
-                    robot.sleep(.1);
+//            robot.sweepin(1.5);
+//            telemetry.addData("Stage: ", "Continue Sweeping in");
+//                    robot.sleep(.1);
 
-            robot.turnleft(.15);
+            robot.turnleft(.17);
             telemetry.addData("Stage: ", "Turn Left");
                     robot.sleep(1.0);
 
@@ -126,24 +126,24 @@ public class FINALCRATER extends LinearOpMode {
             telemetry.addData("Stage: ", "Turn Left");
                     robot.sleep(1.0);
 
-            robot.slideandsweepout(1.2);
+            robot.slideandsweepout(1.5);
             telemetry.addData("Stage: ", "Slide Out and Sweep in");
                     robot.sleep(.1);
 
-            robot.sweepin(1.0);
-            telemetry.addData("Stage: ", "Continue Sweeping in");
-                    robot.sleep(.1);
+//            robot.sweepin(1.0);
+//            telemetry.addData("Stage: ", "Continue Sweeping in");
+//                    robot.sleep(.1);
 
-            robot.slideandsweepin(1.2);
+            robot.slideandsweepin(1.5);
             telemetry.addData("Stage: ", "Slide in and Sweep in");
                     robot.sleep(.1);
 
-            robot.sweepin(2.0);
-            telemetry.addData("Stage: ", "Continue Sweeping in");
-                    robot.sleep(.1);
+//            robot.sweepin(2.0);
+//            telemetry.addData("Stage: ", "Continue Sweeping in");
+//                    robot.sleep(.1);
 
-            robot.turnright(.1);
-            telemetry.addData("Stage: ", "Turn Right");
+            robot.turnleft(.04);
+            telemetry.addData("Stage: ", "Turn Left");
                     robot.sleep(.5);
 
 
@@ -186,7 +186,7 @@ public class FINALCRATER extends LinearOpMode {
                 robot.sleep(.1);
 
         robot.backward(1.9);
-        telemetry.addData("Stage: ", "Forward");
+        telemetry.addData("Stage: ", "Backward");
                 robot.sleep(1.0);
 
 
