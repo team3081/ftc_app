@@ -268,10 +268,10 @@ public class EncoderTESTS_PID extends LinearOpMode {
             power = pidEncoder.performPID(currentBackLeftEnc); // power will be + on left turn.
             correction = checkDirection();
             //correction = pidDrive.performPID(getAngle());
-            leftFront.setPower(power + correction);
-            rightFront.setPower(-power - correction);
-            leftRear.setPower(power + correction);
-            rightRear.setPower(-power - correction);
+            leftFront.setPower(1 + correction);
+            rightFront.setPower(-1 - correction);
+            leftRear.setPower(1 + correction);
+            rightRear.setPower(-1 - correction);
             //currentLeftEnc  = leftMotor.getCurrentPosition();
             currentBackLeftEnc = leftRear.getCurrentPosition();
             telemetry.addData("1 power", power);
@@ -334,20 +334,20 @@ public class EncoderTESTS_PID extends LinearOpMode {
             do
             {
                 power = pidRotate.performPID(getAngle()); // power will be - on right turn.
-                leftFront.setPower(-power);
-                rightFront.setPower(-power);
-                leftRear.setPower(-power);
-                rightRear.setPower(-power);
+                leftFront.setPower(.7);
+                rightFront.setPower(.7);
+                leftRear.setPower(.7);
+                rightRear.setPower(.7);
             } while (opModeIsActive() && !pidRotate.onTarget());
         }
         else    // left turn.
             do
             {
                 power = pidRotate.performPID(getAngle()); // power will be + on left turn.
-                leftFront.setPower(-power);
-                rightFront.setPower(-power);
-                leftRear.setPower(-power);
-                rightRear.setPower(-power);
+                leftFront.setPower(-.7);
+                rightFront.setPower(-.7);
+                leftRear.setPower(-.7);
+                rightRear.setPower(-.7);
             } while (opModeIsActive() && !pidRotate.onTarget());
 
         // turn the motors off.

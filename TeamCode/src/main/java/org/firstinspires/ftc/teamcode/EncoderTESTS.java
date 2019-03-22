@@ -28,7 +28,7 @@ public class EncoderTESTS extends LinearOpMode {
 
     static final double DRIVEPOWER   =  1;
     static final double TURNPOWER    =  1;
-    static final int    TURNCORR     =   +5; //degrees corr, pos corrects for oversteer, neg for under
+    static final int    TURNCORR     =   +1; //degrees corr, pos corrects for oversteer, neg for under
     static final double ENCODE_PPR   = 1020; //NeverRest 40 280 pulse per revolution (ppr)
     static final double WHEEL_CIRCUM = 31.91; // 10cm diameter ~ 31.42 cm/rev
 
@@ -215,7 +215,7 @@ public class EncoderTESTS extends LinearOpMode {
         // The gain value determines how sensitive the correction is to direction changes.
         // You will have to experiment with your robot to get small smooth direction changes
         // to stay on a straight line.
-        double correction, angle, gain = .05;
+        double correction, angle, gain = .5;
 
         angle = getAngle();
 
