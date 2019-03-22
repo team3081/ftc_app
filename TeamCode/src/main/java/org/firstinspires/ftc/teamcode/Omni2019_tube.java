@@ -1,22 +1,14 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
 
-import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.util.Range;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
-
-
-
-@TeleOp(name="Omni2019", group="Pushbot")
-public class Omni2019 extends OpMode{
+@TeleOp(name="Omni2019_tube", group="Pushbot")
+public class Omni2019_tube extends OpMode{
 
     HardwareOmni robot       = new HardwareOmni();
     MediaPlayer mediaPlayer;
@@ -30,9 +22,9 @@ public class Omni2019 extends OpMode{
     }
     @Override
     public void init_loop() {
-        robot.tube.setPosition(.41);
+        robot.tube.setPosition(.95);
     }
-    double position = 0;
+    double position = .6;
 
 
     @Override
@@ -137,7 +129,7 @@ public class Omni2019 extends OpMode{
         if(gamepad2.dpad_up){                               //tube up
             robot.tube.setPosition(.41);
         }else if(gamepad2. dpad_down){                      //tube down
-            robot.tube.setPosition(.975);
+            robot.tube.setPosition(.95);
         }
 
         if(gamepad1.y){

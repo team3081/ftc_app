@@ -162,7 +162,7 @@ public class HardwareOmni
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
             slide.setPower(-1);//-
-            sweeper.setPower(-1);//-
+            sweeper.setPower(1);//-
         }
     }
 
@@ -170,14 +170,14 @@ public class HardwareOmni
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
             slide.setPower(1);//+
-            sweeper.setPower(-1);//-
+            sweeper.setPower(1);//-
         }
     }
 
     public void sweepin(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
-            sweeper.setPower(-1);//-
+            sweeper.setPower(1);//-
         }
     }
 
@@ -206,7 +206,7 @@ public class HardwareOmni
     public void drop(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){
-            marker.setPosition(.2);
+            marker.setPosition(.3);
         }
     }
 

@@ -49,196 +49,261 @@ public class DOUBLEFINALCRATER extends LinearOpMode {
         }else if (detector.getXPosition() > 200 && detector.getXPosition() < 400){
             GoldPos = 2;      //center
         }
-            telemetry.addData("Gold Position: ", GoldPos);
+        telemetry.addData("Gold Position: ", GoldPos);
 
 
 
-        robot.startauto(5.77);
+        robot.startauto(5.8);
         telemetry.addData("Stage: ", "Lower Bot and Lift Tube");
-                robot.sleep(.5);
+        robot.sleep(.5);
 
         robot.backward(.06);
         telemetry.addData("Stage: ", "Unhook 1");
-                robot.sleep(.5);
+        robot.sleep(.5);
 
         robot.strafeleft(.3);
         telemetry.addData("Stage: ", "Unhook 2");
-                robot.sleep(.5);
+        robot.sleep(.5);
 
         robot.forward(.06);
         telemetry.addData("Stage: ", "Unhook 3");
-                robot.sleep(.5);
+        robot.sleep(.5);
 
 
 
         if(GoldPos == 1){  //gold is to the left
             robot.turnleft(.9);
             telemetry.addData("Stage: ", "Left Turn");
-                    robot.sleep(.1);
+            robot.sleep(.1);
 
             robot.slideandsweepout(1.6);
             telemetry.addData("Stage: ", "Slide Out and Sweep in");
-                    robot.sleep(.1);
+            robot.sleep(.1);
 
-            robot.sweepin(1.0);
-            telemetry.addData("Stage: ", "Continue Sweeping in");
-                    robot.sleep(.1);
+//            robot.sweepin(1.0);
+//            telemetry.addData("Stage: ", "Continue Sweeping in");
+//                    robot.sleep(.1);
 
-            robot.slideandsweepin(1.5);
+            robot.slideandsweepin(1.75);
             telemetry.addData("Stage: ", "Slide in and Sweep in");
-                    robot.sleep(.1);
+            robot.sleep(.1);
 
-            robot.sweepin(1.5);
-            telemetry.addData("Stage: ", "Continue Sweeping in");
-                    robot.sleep(.1);
+//            robot.sweepin(1.5);
+//            telemetry.addData("Stage: ", "Continue Sweeping in");
+//                    robot.sleep(.1);
 
             robot.turnright(.2);
             telemetry.addData("Stage: ", "Turn Right");
-                    robot.sleep(.1);
+            robot.sleep(.1);
 
         }else if (GoldPos == 3){//gold is to the right
-            robot.turnleft(.37);
+            robot.turnleft(.345);
             telemetry.addData("Stage: ", "Turn Left");
-                    robot.sleep(1.0);
+            robot.sleep(1.0);
 
             robot.slideandsweepout(1.6);
             telemetry.addData("Stage: ", "Slide Out and Sweeper Out");
-                    robot.sleep(.1);
+            robot.sleep(.1);
 
-            robot.sweepin(1.0);
-            telemetry.addData("Stage: ", "Continue Sweeping in");
-                    robot.sleep(.1);
+//            robot.sweepin(1.0);
+//            telemetry.addData("Stage: ", "Continue Sweeping in");
+//                    robot.sleep(.1);
 
-            robot.slideandsweepin(1.5);
+            robot.slideandsweepin(1.75);
             telemetry.addData("Stage: ", "Slide in and Sweep in");
-                    robot.sleep(.1);
+            robot.sleep(.1);
 
-            robot.sweepin(1.5);
-            telemetry.addData("Stage: ", "Continue Sweeping in");
-                    robot.sleep(.1);
+//            robot.sweepin(1.5);
+//            telemetry.addData("Stage: ", "Continue Sweeping in");
+//                    robot.sleep(.1);
 
-            robot.turnleft(.15);
+            robot.turnleft(.17);
             telemetry.addData("Stage: ", "Turn Left");
-                    robot.sleep(1.0);
+            robot.sleep(1.0);
 
         }else if (GoldPos == 2){//gold is in the center
-            robot.turnleft(.69);
+            robot.turnleft(.62);
             telemetry.addData("Stage: ", "Turn Left");
-                    robot.sleep(1.0);
+            robot.sleep(1.0);
 
-            robot.slideandsweepout(1.2);
+            robot.slideandsweepout(1.5);
             telemetry.addData("Stage: ", "Slide Out and Sweep in");
-                    robot.sleep(.1);
+            robot.sleep(.1);
 
-            robot.sweepin(1.0);
-            telemetry.addData("Stage: ", "Continue Sweeping in");
-                    robot.sleep(.1);
+//            robot.sweepin(1.0);
+//            telemetry.addData("Stage: ", "Continue Sweeping in");
+//                    robot.sleep(.1);
 
-            robot.slideandsweepin(1.2);
+            robot.slideandsweepin(1.7);
             telemetry.addData("Stage: ", "Slide in and Sweep in");
-                    robot.sleep(.1);
+            robot.sleep(.1);
 
-            robot.sweepin(2.0);
-            telemetry.addData("Stage: ", "Continue Sweeping in");
-                    robot.sleep(.1);
+//            robot.sweepin(2.0);
+//            telemetry.addData("Stage: ", "Continue Sweeping in");
+//                    robot.sleep(.1);
 
-            robot.turnright(.1);
-            telemetry.addData("Stage: ", "Turn Right");
-                    robot.sleep(.5);
+            robot.turnleft(.02);
+            telemetry.addData("Stage: ", "Turn Left");
+            robot.sleep(.5);
 
 
         }
 
-        robot.strafeleft(.3);
-        telemetry.addData("Stage: ", "Strafe Left");
-                robot.sleep(.3);
 
-//        robot.backward(.07);
-//        telemetry.addData("Stage: ", "Back");
-//                robot.sleep(.1);
-//
-//        robot.pop(1.0);
-//        telemetry.addData("Stage: ", "Pop");
-//                robot.sleep(.1);
-//
-//        robot.forward(.1);
-//        telemetry.addData("Stage: ", "Forward");
-//                robot.sleep(.1);
 
-        robot.turnleft(.38);
-        telemetry.addData("Stage: ", "Turn Left");
-                robot.sleep(.1);
+        if(GoldPos == 1){  //gold is to the left
+            robot.strafeleft(.3);
+            telemetry.addData("Stage: ", "Strafe Left");
+            robot.sleep(.3);
 
-        robot.forward(1.22);
-        telemetry.addData("Stage: ", "Forward");
-                robot.sleep(.1);
+            robot.turnleft(.38);
+            telemetry.addData("Stage: ", "Turn Left");
+            robot.sleep(.1);
 
-        robot.turnleft(.56);
-        telemetry.addData("Stage: ", "Turn Left");
-                robot.sleep(.1);
+            robot.forward(1.22);
+            telemetry.addData("Stage: ", "Forward");
+            robot.sleep(.1);
 
-        robot.forward(1.6);
-        telemetry.addData("Stage: ", "Forward");
-                robot.sleep(.1);
+            robot.turnleft(.56);
+            telemetry.addData("Stage: ", "Turn Left");
+            robot.sleep(.1);
 
-        robot.drop(1.0);
-        telemetry.addData("Stage: ", "Drop");
-                robot.sleep(.1);
+            robot.forward(1.6);
+            telemetry.addData("Stage: ", "Forward");
+            robot.sleep(.1);
 
-        if(GoldPos == 1){
-            robot.turnleft(.5);
-                robot.sleep(.1);
+            robot.drop(1.0);
+            telemetry.addData("Stage: ", "Drop");
+            robot.sleep(.1);
 
-            robot.slideandsweepout(1.2);
+            robot.turnleft(.6);
+            telemetry.addData("Stage: ", "Left Turn");
+            robot.sleep(.1);
+
+            robot.slideandsweepout(1.6);
             telemetry.addData("Stage: ", "Slide Out and Sweep in");
             robot.sleep(.1);
 
-            robot.sweepin(1.0);
-            telemetry.addData("Stage: ", "Continue Sweeping in");
-            robot.sleep(.1);
+//            robot.sweepin(1.0);
+//            telemetry.addData("Stage: ", "Continue Sweeping in");
+//                    robot.sleep(.1);
 
-            robot.slideandsweepin(1.2);
+            robot.slideandsweepin(1.75);
             telemetry.addData("Stage: ", "Slide in and Sweep in");
             robot.sleep(.1);
 
-        }else if(GoldPos == 3){
-            robot.turnleft(1.0);
-                robot.sleep(.1);
+//            robot.sweepin(1.5);
+//            telemetry.addData("Stage: ", "Continue Sweeping in");
+//                    robot.sleep(.1);
 
-            robot.slideandsweepout(1.2);
-            telemetry.addData("Stage: ", "Slide Out and Sweep in");
-            robot.sleep(.1);
-
-            robot.sweepin(1.0);
-            telemetry.addData("Stage: ", "Continue Sweeping in");
-            robot.sleep(.1);
-
-            robot.slideandsweepin(1.2);
-            telemetry.addData("Stage: ", "Slide in and Sweep in");
-            robot.sleep(.1);
-
-        }else if(GoldPos == 2){
             robot.turnleft(.7);
-                robot.sleep(.1);
-
-            robot.slideandsweepout(1.2);
-            telemetry.addData("Stage: ", "Slide Out and Sweep in");
+            telemetry.addData("Stage: ", "Turn Right");
             robot.sleep(.1);
 
-            robot.sweepin(1.0);
-            telemetry.addData("Stage: ", "Continue Sweeping in");
+        }else if (GoldPos == 3){//gold is to the right
+            robot.strafeleft(.3);
+            telemetry.addData("Stage: ", "Strafe Left");
+            robot.sleep(.3);
+
+            robot.turnleft(.38);
+            telemetry.addData("Stage: ", "Turn Left");
             robot.sleep(.1);
 
-            robot.slideandsweepin(1.2);
+            robot.forward(1.22);
+            telemetry.addData("Stage: ", "Forward");
+            robot.sleep(.1);
+
+            robot.turnleft(.6);
+            telemetry.addData("Stage: ", "Turn Left");
+            robot.sleep(.1);
+
+            robot.forward(1.6);
+            telemetry.addData("Stage: ", "Forward");
+            robot.sleep(.1);
+
+            robot.drop(1.0);
+            telemetry.addData("Stage: ", "Drop");
+            robot.sleep(.1);
+
+            robot.turnleft(1.2);
+            telemetry.addData("Stage: ", "Turn Left");
+            robot.sleep(.5);
+
+            robot.slideandsweepout(1.6);
+            telemetry.addData("Stage: ", "Slide Out and Sweeper Out");
+            robot.sleep(.1);
+
+//            robot.sweepin(1.0);
+//            telemetry.addData("Stage: ", "Continue Sweeping in");
+//                    robot.sleep(.1);
+
+            robot.slideandsweepin(1.75);
             telemetry.addData("Stage: ", "Slide in and Sweep in");
             robot.sleep(.1);
 
+//            robot.sweepin(1.5);
+//            telemetry.addData("Stage: ", "Continue Sweeping in");
+//                    robot.sleep(.1);
+
+            robot.turnleft(.2);
+            telemetry.addData("Stage: ", "Turn Left");
+            robot.sleep(.5);
+
+        }else if (GoldPos == 2){//gold is in the center
+            robot.strafeleft(.3);
+            telemetry.addData("Stage: ", "Strafe Left");
+            robot.sleep(.3);
+
+            robot.turnleft(.38);
+            telemetry.addData("Stage: ", "Turn Left");
+            robot.sleep(.1);
+
+            robot.forward(1.22);
+            telemetry.addData("Stage: ", "Forward");
+            robot.sleep(.1);
+
+            robot.turnleft(.66);
+            telemetry.addData("Stage: ", "Turn Left");
+            robot.sleep(.1);
+
+            robot.forward(1.6);
+            telemetry.addData("Stage: ", "Forward");
+            robot.sleep(.1);
+
+            robot.drop(1.0);
+            telemetry.addData("Stage: ", "Drop");
+            robot.sleep(.1);
+
+            robot.turnleft(.86);
+            telemetry.addData("Stage: ", "Turn Left");
+            robot.sleep(.5);
+
+            robot.slideandsweepout(1.5);
+            telemetry.addData("Stage: ", "Slide Out and Sweep in");
+            robot.sleep(.1);
+
+//            robot.sweepin(1.0);
+//            telemetry.addData("Stage: ", "Continue Sweeping in");
+//                    robot.sleep(.1);
+
+            robot.slideandsweepin(1.7);
+            telemetry.addData("Stage: ", "Slide in and Sweep in");
+            robot.sleep(.1);
+
+//            robot.sweepin(2.0);
+//            telemetry.addData("Stage: ", "Continue Sweeping in");
+//                    robot.sleep(.1);
+
+            robot.turnleft(.46);
+            telemetry.addData("Stage: ", "Turn Left");
+            robot.sleep(.5);
+
+
         }
 
-
-        robot.forward(1.9);
-        telemetry.addData("Stage: ", "Backward");
-                robot.sleep(1.0);
+        robot.forward(2.1);
+        telemetry.addData("Stage: ", "Forward");
+        robot.sleep(1.0);
 
 
     }
