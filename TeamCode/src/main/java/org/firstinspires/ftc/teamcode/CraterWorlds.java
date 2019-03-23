@@ -21,10 +21,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@Autonomous(name = "Drive Encode Imu 2 PID", group = "Exercises")
+@Autonomous(name = "Crater Worlds", group = "Exercises")
 //@Disabled
 
-public class EncoderTESTS_PID extends LinearOpMode {
+public class CraterWorlds extends LinearOpMode {
 
     static final double DRIVEPOWER   =  1;
     static final double TURNPOWER    =  1;
@@ -153,20 +153,45 @@ public class EncoderTESTS_PID extends LinearOpMode {
             telemetry.addData("Gold Position: ", GoldPos);
 
 
+            straight(-1 * WHEEL_CIRCUM, DRIVEPOWER);
+                sleep(250);
+            robot.strafeleft(.2);
+                sleep(250);
+            straight(+1 * WHEEL_CIRCUM, DRIVEPOWER);
+                sleep(250);
+            if(GoldPos == 1){
+                rotate(-75,TURNPOWER);
+                    sleep(250);
+                robot.slideandsweepout(1.5);
+                robot.slideandsweepin(1.5);
+                rotate(-15,TURNPOWER);
+            }else if(GoldPos == 2){
+                rotate(-90, TURNPOWER);
+                    sleep(250);
+                robot.slideandsweepout(1.5);
+                robot.slideandsweepin(1.5);
+            } else if (GoldPos == 3){
+                rotate(-105, TURNPOWER);
+                    sleep(250);
+                robot.slideandsweepout(1.5);
+                robot.slideandsweepin(1.5);
+                rotate(15,TURNPOWER);
+            }
+
 
             // Use gyro to drive in a straight line for dist
-            straight(5.0 * WHEEL_CIRCUM, DRIVEPOWER);
-            sleep(250);
-            rotate(90,  TURNPOWER);
-            straight(5.0 * WHEEL_CIRCUM, DRIVEPOWER);
-            sleep(250);
-            rotate(90,  TURNPOWER);
-            straight(5.0 * WHEEL_CIRCUM, DRIVEPOWER);
-            sleep(250);
-            rotate(+90, TURNPOWER);
-            straight(5.0 * WHEEL_CIRCUM, DRIVEPOWER);
-            sleep(250);
-            rotate(+90, TURNPOWER);
+//            straight(5.0 * WHEEL_CIRCUM, DRIVEPOWER);
+//            sleep(250);
+//            rotate(90,  TURNPOWER);
+//            straight(5.0 * WHEEL_CIRCUM, DRIVEPOWER);
+//            sleep(250);
+//            rotate(90,  TURNPOWER);
+//            straight(5.0 * WHEEL_CIRCUM, DRIVEPOWER);
+//            sleep(250);
+//            rotate(+90, TURNPOWER);
+//            straight(5.0 * WHEEL_CIRCUM, DRIVEPOWER);
+//            sleep(250);
+//            rotate(+90, TURNPOWER);
 
         }
 
