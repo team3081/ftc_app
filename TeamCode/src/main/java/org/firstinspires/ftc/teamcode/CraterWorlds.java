@@ -155,29 +155,33 @@ public class CraterWorlds extends LinearOpMode {
 
             straight(-1 * WHEEL_CIRCUM, DRIVEPOWER);
                 sleep(250);
-            robot.strafeleft(.2);
+            strafe(-1 * WHEEL_CIRCUM, DRIVEPOWER);
                 sleep(250);
             straight(+1 * WHEEL_CIRCUM, DRIVEPOWER);
                 sleep(250);
             if(GoldPos == 1){
-                rotate(-75,TURNPOWER);
+                rotate(-70,TURNPOWER);
                     sleep(250);
                 robot.slideandsweepout(1.5);
                 robot.slideandsweepin(1.5);
-                rotate(-15,TURNPOWER);
+                rotate(-20,TURNPOWER);
             }else if(GoldPos == 2){
                 rotate(-90, TURNPOWER);
                     sleep(250);
                 robot.slideandsweepout(1.5);
                 robot.slideandsweepin(1.5);
             } else if (GoldPos == 3){
-                rotate(-105, TURNPOWER);
+                rotate(-110, TURNPOWER);
                     sleep(250);
                 robot.slideandsweepout(1.5);
                 robot.slideandsweepin(1.5);
-                rotate(15,TURNPOWER);
+                rotate(20,TURNPOWER);
             }
-
+            straight(1 * WHEEL_CIRCUM, DRIVEPOWER);
+                sleep(250);
+            strafe(-2* WHEEL_CIRCUM, DRIVEPOWER);
+                sleep(250);
+            rotate(45, TURNPOWER);
 
             // Use gyro to drive in a straight line for dist
 //            straight(5.0 * WHEEL_CIRCUM, DRIVEPOWER);
@@ -296,6 +300,47 @@ public class CraterWorlds extends LinearOpMode {
             leftFront.setPower(1 + correction);
             rightFront.setPower(-1 - correction);
             leftRear.setPower(1 + correction);
+            rightRear.setPower(-1 - correction);
+            //currentLeftEnc  = leftMotor.getCurrentPosition();
+            currentBackLeftEnc = leftRear.getCurrentPosition();
+            telemetry.addData("1 power", power);
+            telemetry.addData("2 correction", correction);
+            telemetry.addData("3 target", targetBackLeftEnc);
+            telemetry.addData("4 left rear enc", currentBackLeftEnc);
+            telemetry.addData("5 error", pidEncoder.m_error);
+            telemetry.update();
+        } while (opModeIsActive() && !pidEncoder.onTarget());
+
+        sleep(100);
+        leftFront.setPower(0);
+        rightFront.setPower(0);
+        leftRear.setPower(0);
+        rightRear.setPower(0);
+    }
+
+
+    private void strafe(double dist, double power) {// negative is left and positive is right
+        //   int currentLeftEnc  = leftFront.getCurrentPosition();
+        int currentBackLeftEnc = leftRear.getCurrentPosition();
+
+        // int targetLeftEnc  = currentLeftEnc + calcPPR(dist);
+        int targetBackLeftEnc = currentBackLeftEnc + calcPPR(dist);
+
+        pidEncoder.reset();
+        pidEncoder.setSetpoint(targetBackLeftEnc);
+        pidEncoder.setInputRange(0, targetBackLeftEnc+100);
+        pidEncoder.setOutputRange(.20, power);
+        pidEncoder.setTolerance(2);
+        pidEncoder.enable();
+
+        do
+        {
+            power = pidEncoder.performPID(currentBackLeftEnc); // power will be + on left turn.
+            correction = checkDirection();
+            //correction = pidDrive.performPID(getAngle());
+            leftFront.setPower(1 + correction);
+            rightFront.setPower(1 - correction);
+            leftRear.setPower(-1 + correction);
             rightRear.setPower(-1 - correction);
             //currentLeftEnc  = leftMotor.getCurrentPosition();
             currentBackLeftEnc = leftRear.getCurrentPosition();
