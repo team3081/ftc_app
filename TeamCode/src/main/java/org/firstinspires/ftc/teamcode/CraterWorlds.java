@@ -162,19 +162,19 @@ public class CraterWorlds extends LinearOpMode {
             if(GoldPos == 1){
                 rotate(-70,TURNPOWER);
                     sleep(250);
-                robot.slideandsweepout(1.5);
-                robot.slideandsweepin(1.5);
+//                robot.slideandsweepout(1.5);
+//                robot.slideandsweepin(1.5);
                 rotate(-20,TURNPOWER);
             }else if(GoldPos == 2){
                 rotate(-90, TURNPOWER);
                     sleep(250);
-                robot.slideandsweepout(1.5);
-                robot.slideandsweepin(1.5);
+//                robot.slideandsweepout(1.5);
+//                robot.slideandsweepin(1.5);
             } else if (GoldPos == 3){
                 rotate(-110, TURNPOWER);
                     sleep(250);
-                robot.slideandsweepout(1.5);
-                robot.slideandsweepin(1.5);
+//                robot.slideandsweepout(1.5);
+//                robot.slideandsweepin(1.5);
                 rotate(20,TURNPOWER);
             }
             straight(1 * WHEEL_CIRCUM, DRIVEPOWER);
