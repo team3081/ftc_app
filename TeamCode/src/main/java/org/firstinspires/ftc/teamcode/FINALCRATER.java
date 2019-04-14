@@ -53,7 +53,7 @@ public class FINALCRATER extends LinearOpMode {
 
 
 
-        robot.startauto(5.8);
+        robot.startauto(1.0);
         telemetry.addData("Stage: ", "Lower Bot and Lift Tube");
                 robot.sleep(.5);
 

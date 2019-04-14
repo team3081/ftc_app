@@ -1,11 +1,5 @@
-
-// Simple autonomous program that drives bot forward for a given amount
-// of time then does right-hand 90-deg trun; or does turn when gamepad A,B
-// button is pushed.
-//
-// Also uses IMU to drive in a straight line when not avoiding an obstacle.
-
 package org.firstinspires.ftc.teamcode;
+
 
 import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
@@ -13,7 +7,6 @@ import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -21,30 +14,22 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@Autonomous(name = "Crater Worlds", group = "Exercises")
+@Autonomous(name = "Depot Worlds_v2", group = "Exercises")
 //@Disabled
 
-public class CraterWorlds extends LinearOpMode {
+public class DepotrWorlds_v2 extends LinearOpMode {
 
-    static final double DRIVEPOWER   =  0.5;
-    static final double TURNPOWER    =  0.9;
-    static final int    TURNCORR     =   +5; //degrees corr, pos corrects for oversteer, neg for under
+    static final double DRIVEPOWER   =  .9;
+    static final double TURNPOWER    =  .9;
     static final double ENCODE_PPR   = 1020; //NeverRest 40 280 pulse per revolution (ppr)
     static final double WHEEL_CIRCUM = 31.91; // 10cm diameter ~ 31.42 cm/rev
 
-    DcMotor leftFront;
-    DcMotor rightFront;
-    DcMotor leftRear;
-    DcMotor rightRear;
     HardwareOmni robot = new HardwareOmni();
 
-    //DigitalChannel          touch;
     BNO055IMU imu;
     Orientation lastAngles = new Orientation();
     double globalAngle, correction;
     PIDController  pidRotate, pidDrive, pidEncoder;
-
-   // boolean aButton, bButton, touched;
 
     private ElapsedTime runtime = new ElapsedTime();
     private GoldAlignDetector detector;
@@ -54,24 +39,7 @@ public class CraterWorlds extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-//        leftMotor = hardwareMap.dcMotor.get("motorZero");
-//
-//        rightMotor = hardwareMap.dcMotor.get("motorOne");
-//        rightMotor.setDirection(DcMotor.Direction.REVERSE);
-//
-//        leftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//        rightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.init(hardwareMap);
-
-        leftFront = hardwareMap.dcMotor.get("leftFront");
-        rightFront = hardwareMap.dcMotor.get("rightFront");
-        leftRear = hardwareMap.dcMotor.get("leftRear");
-        rightRear = hardwareMap.dcMotor.get("rightRear");
-
-        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
@@ -96,7 +64,7 @@ public class CraterWorlds extends LinearOpMode {
 
         // Set PID proportional value to produce non-zero correction value when robot veers off
         // straight line. P value controls how sensitive the correction is.
-//        pidDrive = new PIDController(.05, 0, 0);
+        pidDrive = new PIDController(.05, 0, 0);
 
 
         telemetry.addData("Mode", "calibrating...");
@@ -112,7 +80,6 @@ public class CraterWorlds extends LinearOpMode {
         telemetry.addData("imu calib status", imu.getCalibrationStatus().toString());
         telemetry.update();
 
-        telemetry.addData("Status", "Ready to run");
         detector = new GoldAlignDetector();
         detector.init(hardwareMap.appContext, CameraViewDisplay.getInstance());
         detector.useDefaults();
@@ -124,9 +91,11 @@ public class CraterWorlds extends LinearOpMode {
         detector.ratioScorer.weight = 5;
         detector.ratioScorer.perfectRatio = 1.0;
         detector.enable();
-        robot.init(hardwareMap);
+
+        telemetry.addData("Status", "Ready to run");
         telemetry.addData("IsAligned", detector.getAligned());
         telemetry.addData("X Pos", detector.getXPosition());
+        telemetry.update();
 
         // wait for start button.
 
@@ -153,89 +122,88 @@ public class CraterWorlds extends LinearOpMode {
             telemetry.addData("Gold Position: ", GoldPos);
             telemetry.update();
 
-//            robot.startauto(1.0);
-                robot.sleep(0.5);
-            robot.backward(0.2);
-                robot.sleep(1.0);
-//            straight(.2,.2);
-//            robot.sleep(1.0);
-            strafe(0.2 * WHEEL_CIRCUM, -DRIVEPOWER);
-                robot.sleep(1.0);
-            straight(+1.2 , DRIVEPOWER);
-                robot.sleep(1.0);
+       robot.startauto(1.3);
+            robot.sleep(0.5);
+        straightback(-1,-1);
+            robot.sleep(1.0);
+        strafe(0.35 * WHEEL_CIRCUM, DRIVEPOWER); // left
+            robot.sleep(1.0);
+        straight(+1 , DRIVEPOWER);
+            robot.sleep(1.0);
 
-            if(GoldPos == 3){           //ROLLED RIGHT, LEFT OF BOT
-                rotate(60,TURNPOWER);
-                    robot.sleep(0.250);
-                straight(35, DRIVEPOWER);
-                    robot.sleep(0.250);
-                straightback(-34, -DRIVEPOWER);
-                    robot.sleep(0.250);
-                rotate(70,TURNPOWER);
-                    robot.sleep(0.250);
-                straight(65, DRIVEPOWER);
-                    robot.sleep(0.250);
-                rotate(60,TURNPOWER);
-                    robot.sleep(0.250);
+            if (GoldPos == 3) { //ROLLED LEFT, RIGHT OF BOT
+                rotate(55,TURNPOWER);
+                robot.sleep(0.100);
+                straight(55, DRIVEPOWER);
+                robot.sleep(0.100);
+                straightback(-50, -DRIVEPOWER);
+                robot.sleep(0.100);
+                rotate(90,TURNPOWER);
+                rotate(30,TURNPOWER);
+                robot.sleep(0.100);
+                straight(122, DRIVEPOWER);
+                robot.sleep(0.100);
+                rotate(90,TURNPOWER);
+                robot.sleep(0.100);
+                rotate(30,TURNPOWER);
                 straight(4 * WHEEL_CIRCUM, DRIVEPOWER);
-                    robot.sleep(0.250);
+                robot.sleep(0.100);
                 robot.drop(1.0);
-                    robot.sleep(0.250);
-                straightback(-5 * WHEEL_CIRCUM, -DRIVEPOWER);
-                    robot.sleep(0.250);
+                robot.sleep(0.250);
+                straightback(-5.5 * WHEEL_CIRCUM, -DRIVEPOWER);
+                robot.sleep(.100);
 
-            }else if(GoldPos == 2){     //ROLLED CENTER, CENTER OF BOT
+            } else if (GoldPos == 2){ //ROLLED CENTER, CENTER OF BOT
                 rotate(90, TURNPOWER);
-                    robot.sleep(0.250);
-                straight(1 * WHEEL_CIRCUM, DRIVEPOWER);
-                    robot.sleep(0.250);
-                straightback(-1 * WHEEL_CIRCUM, -DRIVEPOWER);
-                    robot.sleep(0.250);
-                rotate(50,TURNPOWER);
-                    robot.sleep(0.250);
-                straight(2.1 * WHEEL_CIRCUM, DRIVEPOWER);
-                    robot.sleep(0.250);
-                rotate(40,TURNPOWER);
-                    robot.sleep(0.250);
-                straight(4 * WHEEL_CIRCUM, DRIVEPOWER);
-                    robot.sleep(0.250);
+                robot.sleep(0.05);
+                straight(55, DRIVEPOWER);
+                robot.sleep(0.05);
+                straightback(-40, -DRIVEPOWER);
+                robot.sleep(0.05);
+                rotate(60,TURNPOWER);
+                robot.sleep(0.05);
+                straight(3.55 * WHEEL_CIRCUM, DRIVEPOWER);
+                robot.sleep(0.05);
+                rotate(69, TURNPOWER);
+                robot.sleep(0.05);
+                straight(4.1 * WHEEL_CIRCUM, DRIVEPOWER);
+                robot.sleep(.05);
                 robot.drop(1.0);
-                    robot.sleep(0.250);
-                straightback(-5 * WHEEL_CIRCUM, -DRIVEPOWER);
-                    robot.sleep(0.250);
+                robot.sleep(0.05);
+                straightback(-6 * WHEEL_CIRCUM, -DRIVEPOWER);
+                robot.sleep(0.05);
 
-            } else if (GoldPos == 1){ //ROLLED LEFT, RIGHT OF BOT
-                rotate(125, TURNPOWER);
-                    robot.sleep(0.250);
-                straight(2 * WHEEL_CIRCUM, DRIVEPOWER);
-                    robot.sleep(0.250);
-                rotate(80,TURNPOWER);
-                    robot.sleep(0.250);
-                straight(4 * WHEEL_CIRCUM, DRIVEPOWER);
-                    robot.sleep(0.250);
+            } else if (GoldPos == 1) { //ROLLED RIGHT, LEFT OF BOT
+                rotate(90, TURNPOWER);
+                rotate(50,TURNPOWER);
+                robot.sleep(0.05);
+                straight(3.35 * WHEEL_CIRCUM, DRIVEPOWER);
+                robot.sleep(0.05);
+                rotate(90,TURNPOWER);
+                rotate(18, TURNPOWER);
+                robot.sleep(0.05);
+                straight(3.2 * WHEEL_CIRCUM, DRIVEPOWER);
                 robot.drop(1.0);
-                    robot.sleep(0.250);
-                straightback(-5 * WHEEL_CIRCUM, -DRIVEPOWER);
-                    robot.sleep(0.250);
+                robot.sleep(0.05);
+                straightback(-2.5 * WHEEL_CIRCUM, -DRIVEPOWER);
+                robot.sleep(0.05);
+                strafe(.7 * WHEEL_CIRCUM, DRIVEPOWER);
+                robot.sleep(.05);
+                straightback(-2.0* WHEEL_CIRCUM, -DRIVEPOWER);
+                robot.sleep(.05);
             }
-//
-//            straight(1 * WHEEL_CIRCUM, DRIVEPOWER);
-//                robot.sleep(0.250);
-//            strafe(-2* WHEEL_CIRCUM, DRIVEPOWER);
-//                robot.sleep(0.250);
-//            rotate(45, TURNPOWER);
 
             // turn the motors off.
             while (opModeIsActive()) {
+                telemetry.addData("Done: ", runtime);
+                telemetry.update();
+
                 robot.leftFront.setPower(0);
                 robot.rightFront.setPower(0);
                 robot.leftRear.setPower(0);
                 robot.rightRear.setPower(0);
             }
-
         }
-
-
     }
 
     /**
@@ -256,7 +224,6 @@ public class CraterWorlds extends LinearOpMode {
 
     /**
      * Get current cumulative angle rotation from last reset.
-     *
      * @return Angle in degrees. + = left, - = right.
      */
     private double getAngle() {
@@ -283,14 +250,13 @@ public class CraterWorlds extends LinearOpMode {
 
     /**
      * See if we are moving in a straight line and if not return a power correction value.
-     *
      * @return Power adjustment, + is adjust left - is adjust right.
      */
     private double checkDirection() {
         // The gain value determines how sensitive the correction is to direction changes.
         // You will have to experiment with your robot to get small smooth direction changes
         // to stay on a straight line.
-        double correction, angle, gain = .01;
+        double correction, angle, gain = .02;
 
         angle = getAngle();
 
@@ -306,126 +272,109 @@ public class CraterWorlds extends LinearOpMode {
 
     /**
      * Drive straight for dist centimeters.
-     *
      * @param dist Centimeters to drive
      */
-
     private void straight(double dist, double power) {
+        resetAngle();
+        robot.sleep(0.1);
+
         // int currentLeftEnc  = leftFront.getCurrentPosition();    ////
-        int currentBackLeftEnc = leftRear.getCurrentPosition();
+        int currentBackLeftEnc = robot.leftRear.getCurrentPosition();
 
         // int targetLeftEnc  = currentLeftEnc + calcPPR(dist);  ////
         int targetBackLeftEnc = currentBackLeftEnc + calcPPR(dist);
 
-        resetAngle();
-        robot.sleep(0.1);
-
-
-        do
-        {
-            // power = pidEncoder.performPID(currentBackLeftEnc); // power will be + on left turn.
+        do {
             correction = checkDirection();
-            //correction = pidDrive.performPID(getAngle()); ////
-            robot.leftFront.setPower(power  + correction);
-            robot.rightFront.setPower(-power + correction);
-            robot.leftRear.setPower(power  + correction);
-            robot.rightRear.setPower(-power + correction);
-            //currentLeftEnc  = leftFront.getCurrentPosition();  ////
-            currentBackLeftEnc = leftRear.getCurrentPosition();
+            robot.leftFront.setPower(power  - correction);
+            robot.rightFront.setPower(-power - correction);
+            robot.leftRear.setPower(power  - correction);
+            robot.rightRear.setPower(-power - correction);
+            currentBackLeftEnc = robot.leftRear.getCurrentPosition();
             telemetry.addData("1 power", power);
             telemetry.addData("2 correction", correction);
             telemetry.addData("3 target", targetBackLeftEnc);
             telemetry.addData("4 left rear enc", currentBackLeftEnc);
             telemetry.addData("5 straight", dist);
             telemetry.update();
-            // } while (opModeIsActive() && !pidEncoder.onTarget());
+
         } while (currentBackLeftEnc < targetBackLeftEnc && opModeIsActive());
 
         robot.sleep(0.1);
-        robot.leftFront.setPower(0);
-        robot.rightFront.setPower(0);
-        robot.leftRear.setPower(0);
-        robot.rightRear.setPower(0);
     }
 
 
     private void straightback(double dist, double power) {
+        resetAngle();
+        robot.sleep(0.1);
+
         // int currentLeftEnc  = leftFront.getCurrentPosition();    ////
-        int currentBackLeftEnc = leftRear.getCurrentPosition();
+        int currentBackLeftEnc = robot.leftRear.getCurrentPosition();
 
         // int targetLeftEnc  = currentLeftEnc + calcPPR(dist);  ////
         int targetBackLeftEnc = currentBackLeftEnc + calcPPR(dist);
 
-        resetAngle();
-        robot.sleep(0.1);
-
-
-        do
-        {
-            // power = pidEncoder.performPID(currentBackLeftEnc); // power will be + on left turn.
+        do {
             correction = checkDirection();
-            //correction = pidDrive.performPID(getAngle()); ////
-            robot.leftFront.setPower(power  + correction);
-            robot.rightFront.setPower(-power + correction);
-            robot.leftRear.setPower(power  + correction);
-            robot.rightRear.setPower(-power + correction);
-            //currentLeftEnc  = leftFront.getCurrentPosition();  ////
-            currentBackLeftEnc = leftRear.getCurrentPosition();
+            robot.leftFront.setPower(power  - correction);
+            robot.rightFront.setPower(-power - correction);
+            robot.leftRear.setPower(power  - correction);
+            robot.rightRear.setPower(-power - correction);
+            currentBackLeftEnc = robot.leftRear.getCurrentPosition();
             telemetry.addData("1 power", power);
             telemetry.addData("2 correction", correction);
             telemetry.addData("3 target", targetBackLeftEnc);
             telemetry.addData("4 left rear enc", currentBackLeftEnc);
             telemetry.addData("5 st_back", dist);
             telemetry.update();
-            // } while (opModeIsActive() && !pidEncoder.onTarget());
         } while (currentBackLeftEnc > targetBackLeftEnc && opModeIsActive());
 
+        // power down and pause
         robot.sleep(0.1);
-        robot.leftFront.setPower(0);
-        robot.rightFront.setPower(0);
-        robot.leftRear.setPower(0);
-        robot.rightRear.setPower(0);
     }
 
 
     private void strafe(double dist, double power) {// negative is left and positive is right
+        resetAngle();
+        robot.sleep(0.1);
+
+        int sign = +1;
+        if (power < 0){
+            sign = -1;
+        }
+
         //   int currentLeftEnc  = leftFront.getCurrentPosition();
-        int currentBackLeftEnc = leftRear.getCurrentPosition();
+        int currentBackLeftEnc = Math.abs(robot.leftRear.getCurrentPosition());
 
         // int targetLeftEnc  = currentLeftEnc + calcPPR(dist);
-        int targetBackLeftEnc = currentBackLeftEnc + calcPPR(dist);
+        int difference = Math.abs(calcPPR(dist));
+        int targetBackLeftEnc = currentBackLeftEnc + difference;
 
-        pidEncoder.reset();
-        pidEncoder.setSetpoint(targetBackLeftEnc);
-        pidEncoder.setInputRange(currentBackLeftEnc, targetBackLeftEnc);
-        pidEncoder.setOutputRange(.20, power);
-        pidEncoder.setTolerance(2);
-        pidEncoder.enable();
+//            pidEncoder.reset();
+//            pidEncoder.setSetpoint(targetBackLeftEnc);
+//            pidEncoder.setInputRange(currentBackLeftEnc, targetBackLeftEnc);
+//            pidEncoder.setOutputRange(.50, power);
+//            pidEncoder.setTolerance(2);
+//            pidEncoder.enable();
 
-        do
-        {
-            power = pidEncoder.performPID(currentBackLeftEnc); // power will be + on left turn.
+        do {
+//                power = pidEncoder.performPID(currentBackLeftEnc);
             correction = checkDirection();
-            //correction = pidDrive.performPID(getAngle());
-            robot.leftFront.setPower(-power - correction);
-            robot.rightFront.setPower(-power + correction);
-            robot.leftRear.setPower(power - correction);
-            robot.rightRear.setPower(power + correction);
-            //currentLeftEnc  = leftMotor.getCurrentPosition();
-            currentBackLeftEnc = leftRear.getCurrentPosition();
+            robot.leftFront.setPower(-power);
+            robot.rightFront.setPower(-power);
+            robot.leftRear.setPower(power + (correction * sign));      //multiply by the direction its going to ensure correction is applied properly
+            robot.rightRear.setPower(power - (correction *sign));
+            currentBackLeftEnc = Math.abs(robot.leftRear.getCurrentPosition());
             telemetry.addData("1 power", power);
             telemetry.addData("2 correction", correction);
             telemetry.addData("3 target", targetBackLeftEnc);
             telemetry.addData("4 left rear enc", currentBackLeftEnc);
             telemetry.addData("5 strafe", dist);
             telemetry.update();
-        } while (opModeIsActive() && !pidEncoder.onTarget());
+        } while (opModeIsActive() && currentBackLeftEnc < targetBackLeftEnc);
 
+        // power down and pause
         robot.sleep(0.1);
-        robot.leftFront.setPower(0);
-        robot.rightFront.setPower(0);
-        robot.leftRear.setPower(0);
-        robot.rightRear.setPower(0);
     }
 
     /**
@@ -467,17 +416,19 @@ public class CraterWorlds extends LinearOpMode {
                 robot.rightFront.setPower(power);
                 robot.leftRear.setPower(power);
                 robot.rightRear.setPower(power);
-                robot.sleep(1.0);
+                sleep(1000);
             }
 
             do
             {
-                power = pidRotate.performPID(getAngle()); // power will be - on right turn.
+                power = pidRotate.performPID(getAngle());
                 robot.leftFront.setPower(power);
                 robot.rightFront.setPower(power);
                 robot.leftRear.setPower(power);
                 robot.rightRear.setPower(power);
-                telemetry.addData("Rotate power", power);
+                telemetry.addData("1 PID     power:", power);
+                telemetry.addData("2 current angle:", getAngle());
+                telemetry.addData("3 Rotate target:", degrees);
                 telemetry.update();
 
             } while (opModeIsActive() && !pidRotate.onTarget());
@@ -485,81 +436,24 @@ public class CraterWorlds extends LinearOpMode {
         else    // left turn.
             do
             {
-                power = pidRotate.performPID(getAngle()); // power will be + on left turn.
-                leftFront.setPower(-power);
-                rightFront.setPower(-power);
-                leftRear.setPower(-power);
-                rightRear.setPower(-power);
-                telemetry.addData("Rotate power", power);
+                power = pidRotate.performPID(getAngle());
+                robot.leftFront.setPower(-power);
+                robot.rightFront.setPower(-power);
+                robot.leftRear.setPower(-power);
+                robot.rightRear.setPower(-power);
+                telemetry.addData("1 PID     power:", power);
+                telemetry.addData("2 current angle:", getAngle());
+                telemetry.addData("3 Rotate target:", degrees);
                 telemetry.update();
-
             } while (opModeIsActive() && !pidRotate.onTarget());
 
-        // turn the motors off.
-        robot.leftFront.setPower(0);
-        robot.rightFront.setPower(0);
-        robot.leftRear.setPower(0);
-        robot.rightRear.setPower(0);
-
-        // wait for rotation to stop.
+        // power down & wait for rotation to stop.
         robot.sleep(0.5);
 
         // reset angle tracking on new heading.
         resetAngle();
     }
 
-    /**
-     * Rotate left or right the number of degrees. Does not support turning more than 180 degrees.
-     *
-     //* @param degrees Degrees to turn, + is left - is right
-     */
-//    private void rotate_old(int degrees, double power)
-//    {
-//        double  leftPower, rightPower;
-//
-//        // restart imu movement tracking.
-//        resetAngle();
-//
-//        // getAngle() returns + when rotating counter clockwise (left) and - when rotating
-//        // clockwise (right).
-//
-//        if (degrees < 0)
-//        {   // turn right.
-//            leftPower  = -power;
-//            rightPower =  power;
-//        }
-//        else if (degrees > 0)
-//        {   // turn left.
-//            leftPower  =  power;
-//            rightPower = -power;
-//        }
-//        else return;
-//
-//        // set power to rotate.
-//        leftMotor.setPower(leftPower);
-//        rightMotor.setPower(rightPower);
-//
-//        // rotate until turn is completed.
-//        if (degrees < 0)
-//        {
-//            // On right turn we have to get off zero first.
-//            while (opModeIsActive() && getAngle() == 0) {}
-//
-//            while (opModeIsActive() && getAngle() > degrees + TURNCORR) {}
-//        }
-//        else    // left turn.
-//            while (opModeIsActive() && getAngle() < degrees - TURNCORR) {}
-//
-//        // turn the motors off.
-//        rightMotor.setPower(0);
-//        leftMotor.setPower(0);
-//
-//        // wait for rotation to stop.
-//        sleep(500);
-//
-//        // reset angle tracking on new heading.
-//        resetAngle();
-//    }
 
     // PID controller courtesy of Peter Tischler, with modifications.
     public class PIDController
@@ -729,7 +623,6 @@ public class CraterWorlds extends LinearOpMode {
 
         /**
          * Sets the maximum and minimum values expected from the input.
-         *
          * @param minimumInput the minimum value expected from the input, always positive
          * @param maximumInput the maximum value expected from the output, always positive
          */
@@ -742,7 +635,6 @@ public class CraterWorlds extends LinearOpMode {
 
         /**
          * Sets the minimum and maximum values to write.
-         *
          * @param minimumOutput the minimum value to write to the output, always positive
          * @param maximumOutput the maximum value to write to the output, always positive
          */
