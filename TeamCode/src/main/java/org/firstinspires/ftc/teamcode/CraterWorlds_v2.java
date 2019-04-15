@@ -136,7 +136,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
                     robot.sleep(0.100);
                     straight(55, DRIVEPOWER);
                     robot.sleep(0.100);
-                    straightback(-50, -DRIVEPOWER);
+                    straightback(-48, -DRIVEPOWER);
                     robot.sleep(0.100);
                     rotate(90,TURNPOWER);
                     rotate(30,TURNPOWER);
@@ -150,7 +150,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
                     robot.sleep(0.100);
                     robot.drop(1.0);
                     robot.sleep(0.250);
-                    straightback(-5.5 * WHEEL_CIRCUM, -DRIVEPOWER);
+                    straightback(-5.9 * WHEEL_CIRCUM, -DRIVEPOWER);
                     robot.sleep(.100);
 
                 } else if (GoldPos == 2){ //ROLLED CENTER, CENTER OF BOT

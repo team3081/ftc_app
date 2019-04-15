@@ -8,6 +8,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.vuforia.RotationalDeviceTracker;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -19,8 +20,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 public class DepotrWorlds_v2 extends LinearOpMode {
 
-    static final double DRIVEPOWER   =  .9;
-    static final double TURNPOWER    =  .9;
+    static final double DRIVEPOWER   =  .8;
+    static final double TURNPOWER    =  .8;
     static final double ENCODE_PPR   = 1020; //NeverRest 40 280 pulse per revolution (ppr)
     static final double WHEEL_CIRCUM = 31.91; // 10cm diameter ~ 31.42 cm/rev
 
@@ -132,64 +133,61 @@ public class DepotrWorlds_v2 extends LinearOpMode {
             robot.sleep(1.0);
 
             if (GoldPos == 3) { //ROLLED LEFT, RIGHT OF BOT
-                rotate(55,TURNPOWER);
+                rotate(50,TURNPOWER);
                 robot.sleep(0.100);
-                straight(55, DRIVEPOWER);
-                robot.sleep(0.100);
-                straightback(-50, -DRIVEPOWER);
+                straight(90, DRIVEPOWER);
                 robot.sleep(0.100);
                 rotate(90,TURNPOWER);
-                rotate(30,TURNPOWER);
+                rotate(15,TURNPOWER);
                 robot.sleep(0.100);
-                straight(122, DRIVEPOWER);
-                robot.sleep(0.100);
-                rotate(90,TURNPOWER);
-                robot.sleep(0.100);
-                rotate(30,TURNPOWER);
-                straight(4 * WHEEL_CIRCUM, DRIVEPOWER);
-                robot.sleep(0.100);
+                straight(75, DRIVEPOWER);
                 robot.drop(1.0);
-                robot.sleep(0.250);
-                straightback(-5.5 * WHEEL_CIRCUM, -DRIVEPOWER);
-                robot.sleep(.100);
+                robot.sleep(0.100);
+                straightback(5, -DRIVEPOWER);
+                strafe(4 * WHEEL_CIRCUM, DRIVEPOWER);
+                rotate (90, TURNPOWER);
+                robot.sleep(.05);
+                rotate(45, TURNPOWER);
+                robot.sleep(.05);
+                straight(1.2*WHEEL_CIRCUM , DRIVEPOWER);
+                robot.sleep(.05);
 
             } else if (GoldPos == 2){ //ROLLED CENTER, CENTER OF BOT
                 rotate(90, TURNPOWER);
                 robot.sleep(0.05);
-                straight(55, DRIVEPOWER);
+                straight(70, DRIVEPOWER);
+                robot.sleep(.05);
+                robot.drop(1.0);
                 robot.sleep(0.05);
-                straightback(-40, -DRIVEPOWER);
+                straightback(-60, -DRIVEPOWER);
                 robot.sleep(0.05);
-                rotate(60,TURNPOWER);
+                rotate(70,TURNPOWER);
                 robot.sleep(0.05);
                 straight(3.55 * WHEEL_CIRCUM, DRIVEPOWER);
                 robot.sleep(0.05);
-                rotate(69, TURNPOWER);
+                rotate(50, TURNPOWER);
                 robot.sleep(0.05);
-                straight(4.1 * WHEEL_CIRCUM, DRIVEPOWER);
+                straight(1.0 * WHEEL_CIRCUM, DRIVEPOWER);
                 robot.sleep(.05);
-                robot.drop(1.0);
-                robot.sleep(0.05);
-                straightback(-6 * WHEEL_CIRCUM, -DRIVEPOWER);
-                robot.sleep(0.05);
 
             } else if (GoldPos == 1) { //ROLLED RIGHT, LEFT OF BOT
-                rotate(90, TURNPOWER);
-                rotate(50,TURNPOWER);
+                rotate(85, TURNPOWER);
+                rotate(30,TURNPOWER);
                 robot.sleep(0.05);
                 straight(3.35 * WHEEL_CIRCUM, DRIVEPOWER);
                 robot.sleep(0.05);
-                rotate(90,TURNPOWER);
-                rotate(18, TURNPOWER);
-                robot.sleep(0.05);
-                straight(3.2 * WHEEL_CIRCUM, DRIVEPOWER);
-                robot.drop(1.0);
-                robot.sleep(0.05);
-                straightback(-2.5 * WHEEL_CIRCUM, -DRIVEPOWER);
-                robot.sleep(0.05);
-                strafe(.7 * WHEEL_CIRCUM, DRIVEPOWER);
+                rotate(5, TURNPOWER);
                 robot.sleep(.05);
-                straightback(-2.0* WHEEL_CIRCUM, -DRIVEPOWER);
+                strafe(0.15*WHEEL_CIRCUM, -DRIVEPOWER);
+                robot.drop(1.0);
+                robot.sleep(.05);
+                strafe(.4*WHEEL_CIRCUM , DRIVEPOWER);
+                robot.sleep(.05);
+                rotate (90, TURNPOWER);
+                robot.sleep(.05);
+                rotate(45, TURNPOWER);
+                robot.sleep(.05);
+                straight(1.2*WHEEL_CIRCUM , DRIVEPOWER);
                 robot.sleep(.05);
             }
 
