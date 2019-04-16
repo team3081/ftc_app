@@ -1,22 +1,20 @@
 package org.firstinspires.ftc.teamcode;
 
-
 import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.DogeCV;
 import com.disnodeteam.dogecv.detectors.roverrukus.GoldAlignDetector;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-    @Autonomous(name = "Crater Worlds_v2", group = "Exercises")
+@Autonomous(name = "Crater Worlds_v2", group = "Exercises")
 //@Disabled
-
     public class CraterWorlds_v2 extends LinearOpMode {
 
         static final double DRIVEPOWER   =  .9;
@@ -34,7 +32,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
         private ElapsedTime runtime = new ElapsedTime();
         private GoldAlignDetector detector;
         double GoldPos;
-
         // called when init button is  pressed.
         @Override
         public void runOpMode() throws InterruptedException {
@@ -65,7 +62,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
             // Set PID proportional value to produce non-zero correction value when robot veers off
             // straight line. P value controls how sensitive the correction is.
             pidDrive = new PIDController(.05, 0, 0);
-
 
             telemetry.addData("Mode", "calibrating...");
             telemetry.update();
@@ -205,14 +201,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
                 }
             }
         }
-
         /**
          * Calculate number of pulse ticks for a given distance
          */
         private int calcPPR(double dist) {
             return (int) ((dist / WHEEL_CIRCUM) * ENCODE_PPR);
         }
-
         /**
          * Resets the cumulative angle tracking to zero.
          */
@@ -221,7 +215,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
             globalAngle = 0;
         }
-
         /**
          * Get current cumulative angle rotation from last reset.
          * @return Angle in degrees. + = left, - = right.
@@ -247,7 +240,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
             return globalAngle;
         }
-
         /**
          * See if we are moving in a straight line and if not return a power correction value.
          * @return Power adjustment, + is adjust left - is adjust right.
@@ -269,7 +261,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
             return correction;
         }
-
         /**
          * Drive straight for dist centimeters.
          * @param dist Centimeters to drive
@@ -277,10 +268,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
         private void straight(double dist, double power) {
             resetAngle();
             robot.sleep(0.1);
-
             // int currentLeftEnc  = leftFront.getCurrentPosition();    ////
             int currentBackLeftEnc = robot.leftRear.getCurrentPosition();
-
             // int targetLeftEnc  = currentLeftEnc + calcPPR(dist);  ////
             int targetBackLeftEnc = currentBackLeftEnc + calcPPR(dist);
 
@@ -303,14 +292,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
             robot.sleep(0.1);
         }
 
-
         private void straightback(double dist, double power) {
             resetAngle();
             robot.sleep(0.1);
-
             // int currentLeftEnc  = leftFront.getCurrentPosition();    ////
             int currentBackLeftEnc = robot.leftRear.getCurrentPosition();
-
             // int targetLeftEnc  = currentLeftEnc + calcPPR(dist);  ////
             int targetBackLeftEnc = currentBackLeftEnc + calcPPR(dist);
 
@@ -328,11 +314,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
                 telemetry.addData("5 st_back", dist);
                 telemetry.update();
             } while (currentBackLeftEnc > targetBackLeftEnc && opModeIsActive());
-
             // power down and pause
             robot.sleep(0.1);
         }
-
 
         private void strafe(double dist, double power) {// negative is left and positive is right
             resetAngle();
@@ -342,23 +326,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
             if (power < 0){
                 sign = -1;
             }
-
             //   int currentLeftEnc  = leftFront.getCurrentPosition();
             int currentBackLeftEnc = Math.abs(robot.leftRear.getCurrentPosition());
-
             // int targetLeftEnc  = currentLeftEnc + calcPPR(dist);
             int difference = Math.abs(calcPPR(dist));
             int targetBackLeftEnc = currentBackLeftEnc + difference;
 
-//            pidEncoder.reset();
-//            pidEncoder.setSetpoint(targetBackLeftEnc);
-//            pidEncoder.setInputRange(currentBackLeftEnc, targetBackLeftEnc);
-//            pidEncoder.setOutputRange(.50, power);
-//            pidEncoder.setTolerance(2);
-//            pidEncoder.enable();
-
             do {
-//                power = pidEncoder.performPID(currentBackLeftEnc);
                 correction = checkDirection();
                 robot.leftFront.setPower(-power);
                 robot.rightFront.setPower(-power);
@@ -372,11 +346,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
                 telemetry.addData("5 strafe", dist);
                 telemetry.update();
             } while (opModeIsActive() && currentBackLeftEnc < targetBackLeftEnc);
-
             // power down and pause
             robot.sleep(0.1);
         }
-
         /**
          * Rotate left or right the number of degrees. Does not support turning more than 180 degrees.
          * @param degrees Degrees to turn, + is left - is right
@@ -384,7 +356,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
         private void rotate(int degrees, double power) { // negative power on right and positive power on left
             // restart imu angle tracking.
             resetAngle();
-
             // start pid controller. PID controller will monitor the turn angle with respect to the
             // target angle and reduce power as we approach the target angle with a minimum of 20%.
             // This is to prevent the robots momentum from overshooting the turn after we turn off the
@@ -394,19 +365,15 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
             // complete the turn. Note: if the gap between the starting power and the stall (minimum)
             // power is small, overshoot may still occur. Overshoot is dependant on the motor and
             // gearing configuration, starting power, weight of the robot and the on target tolerance.
-
             pidRotate.reset();
             pidRotate.setSetpoint(degrees);
             pidRotate.setInputRange(0, Math.abs(degrees));
             pidRotate.setOutputRange(0.35, power);
             pidRotate.setTolerance(2);
             pidRotate.enable();
-
             // getAngle() returns + when rotating counter clockwise (left) and - when rotating
             // clockwise (right).
-
             // rotate until turn is completed.
-
             if (degrees < 0)
             {
                 // On right turn we have to get off zero first.
@@ -446,15 +413,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
                     telemetry.addData("3 Rotate target:", degrees);
                     telemetry.update();
                 } while (opModeIsActive() && !pidRotate.onTarget());
-
             // power down & wait for rotation to stop.
             robot.sleep(0.5);
-
             // reset angle tracking on new heading.
             resetAngle();
         }
-
-
         // PID controller courtesy of Peter Tischler, with modifications.
         public class PIDController
         {
@@ -474,7 +437,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
             private double m_setpoint = 0.0;
             private double m_error = 0.0;
             private double m_result = 0.0;
-
             /**
              * Allocate a PID object with the given constants for P, I, D
              * @param Kp the proportional coefficient
@@ -487,7 +449,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
                 m_I = Ki;
                 m_D = Kd;
             }
-
             /**
              * Read the input, calculate the output accordingly, and write to the output.
              * This should only be called by the PIDTask
@@ -496,7 +457,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
             private void calculate()
             {
                 int     sign = 1;
-
                 // If enabled then proceed into controller calculations
                 if (m_enabled)
                 {
@@ -514,22 +474,17 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
                                 m_error = m_error + m_maximumInput - m_minimumInput;
                         }
                     }
-
                     // Integrate the errors as long as the upcoming integrator does
                     // not exceed the minimum and maximum output thresholds.
-
                     if ((Math.abs(m_totalError + m_error) * m_I < m_maximumOutput) &&
                             (Math.abs(m_totalError + m_error) * m_I > m_minimumOutput))
                         m_totalError += m_error;
-
                     // Perform the primary PID calculation
                     m_result = m_P * m_error + m_I * m_totalError + m_D * (m_error - m_prevError);
-
                     // Set the current error to the previous error for the next cycle.
                     m_prevError = m_error;
 
                     if (m_result < 0) sign = -1;    // Record sign of result.
-
                     // Make sure the final result is within bounds. If we constrain the result, we make
                     // sure the sign of the constrained result matches the original result sign.
                     if (Math.abs(m_result) > m_maximumOutput)
@@ -538,7 +493,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
                         m_result = m_minimumOutput * sign;
                 }
             }
-
             /**
              * Set the PID Controller gain parameters.
              * Set the proportional, integral, and differential coefficients.
@@ -552,7 +506,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
                 m_I = i;
                 m_D = d;
             }
-
             /**
              * Get the Proportional coefficient
              * @return proportional coefficient
@@ -560,7 +513,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
             public double getP() {
                 return m_P;
             }
-
             /**
              * Get the Integral coefficient
              * @return integral coefficient
@@ -568,7 +520,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
             public double getI() {
                 return m_I;
             }
-
             /**
              * Get the Differential coefficient
              * @return differential coefficient
@@ -576,7 +527,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
             public double getD() {
                 return m_D;
             }
-
             /**
              * Return the current PID result for the last input set with setInput().
              * This is always centered on zero and constrained the the max and min outs
@@ -587,7 +537,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
                 calculate();
                 return m_result;
             }
-
             /**
              * Return the current PID result for the specified input.
              * @param input The input value to be used to calculate the PID result.
@@ -599,7 +548,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
                 setInput(input);
                 return performPID();
             }
-
             /**
              *  Set the PID controller to consider the input to be continuous,
              *  Rather then using the max and min in as constraints, it considers them to
@@ -610,7 +558,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
             public void setContinuous(boolean continuous) {
                 m_continuous = continuous;
             }
-
             /**
              *  Set the PID controller to consider the input to be continuous,
              *  Rather then using the max and min in as constraints, it considers them to
@@ -620,7 +567,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
             public void setContinuous() {
                 this.setContinuous(true);
             }
-
             /**
              * Sets the maximum and minimum values expected from the input.
              * @param minimumInput the minimum value expected from the input, always positive
@@ -632,7 +578,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
                 m_maximumInput = Math.abs(maximumInput);
                 setSetpoint(m_setpoint);
             }
-
             /**
              * Sets the minimum and maximum values to write.
              * @param minimumOutput the minimum value to write to the output, always positive
@@ -643,7 +588,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
                 m_minimumOutput = Math.abs(minimumOutput);
                 m_maximumOutput = Math.abs(maximumOutput);
             }
-
             /**
              * Set the setpoint for the PIDController
              * @param setpoint the desired setpoint
@@ -666,7 +610,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
                 else
                     m_setpoint = setpoint;
             }
-
             /**
              * Returns the current setpoint of the PIDController
              * @return the current setpoint
@@ -674,7 +617,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
             public double getSetpoint() {
                 return m_setpoint;
             }
-
             /**
              * Retruns the current difference of the input from the setpoint
              * @return the current error
@@ -682,7 +624,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
             public synchronized double getError() {
                 return m_error;
             }
-
             /**
              * Set the percentage error which is considered tolerable for use with
              * OnTarget. (Input of 15.0 = 15 percent)
@@ -691,7 +632,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
             public void setTolerance(double percent) {
                 m_tolerance = percent;
             }
-
             /**
              * Return true if the error is within the percentage of the total input range,
              * determined by setTolerance. This assumes that the maximum and minimum input
@@ -702,21 +642,18 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
             {
                 return (Math.abs(m_error) < Math.abs(m_tolerance / 100 * (m_maximumInput - m_minimumInput)));
             }
-
             /**
              * Begin running the PIDController
              */
             public void enable() {
                 m_enabled = true;
             }
-
             /**
              * Stop running the PIDController.
              */
             public void disable() {
                 m_enabled = false;
             }
-
             /**
              * Reset the previous error,, the integral term, and disable the controller.
              */
@@ -727,7 +664,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
                 m_totalError = 0;
                 m_result = 0;
             }
-
             /**
              * Set the input value to be used by the next call to performPID().
              * @param input Input value to the PID calculation.

@@ -3,12 +3,14 @@ package org.firstinspires.ftc.teamcode;
 
 import android.media.MediaPlayer;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
 @TeleOp(name="Omni2019Encoder", group="Pushbot")
+@Disabled
 public class Omni2019Encoder extends OpMode{
 
     HardwareOmni robot       = new HardwareOmni();

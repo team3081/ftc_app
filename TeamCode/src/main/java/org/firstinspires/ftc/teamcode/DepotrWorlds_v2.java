@@ -48,7 +48,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.loggingEnabled = false;
-
         // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
         // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
         // and named "imu".
@@ -58,19 +57,14 @@ public class DepotrWorlds_v2 extends LinearOpMode {
 
         // Set PID proportional value to start reducing power at about 50 degrees of rotation.
         pidRotate = new PIDController(.005, 0, 0);
-
-
         // Set PID values to reduce poser 60%
         pidEncoder = new PIDController(.005, 0, 0);
-
         // Set PID proportional value to produce non-zero correction value when robot veers off
         // straight line. P value controls how sensitive the correction is.
         pidDrive = new PIDController(.05, 0, 0);
 
-
         telemetry.addData("Mode", "calibrating...");
         telemetry.update();
-
         // make sure the imu gyro is calibrated before continuing.
         while (!isStopRequested() && !imu.isGyroCalibrated()) {
             sleep(50);
@@ -190,7 +184,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
                 straight(1.2*WHEEL_CIRCUM , DRIVEPOWER);
                 robot.sleep(.05);
             }
-
             // turn the motors off.
             while (opModeIsActive()) {
                 telemetry.addData("Done: ", runtime);
@@ -203,14 +196,12 @@ public class DepotrWorlds_v2 extends LinearOpMode {
             }
         }
     }
-
     /**
      * Calculate number of pulse ticks for a given distance
      */
     private int calcPPR(double dist) {
         return (int) ((dist / WHEEL_CIRCUM) * ENCODE_PPR);
     }
-
     /**
      * Resets the cumulative angle tracking to zero.
      */
@@ -219,7 +210,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
 
         globalAngle = 0;
     }
-
     /**
      * Get current cumulative angle rotation from last reset.
      * @return Angle in degrees. + = left, - = right.
@@ -245,7 +235,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
 
         return globalAngle;
     }
-
     /**
      * See if we are moving in a straight line and if not return a power correction value.
      * @return Power adjustment, + is adjust left - is adjust right.
@@ -267,7 +256,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
 
         return correction;
     }
-
     /**
      * Drive straight for dist centimeters.
      * @param dist Centimeters to drive
@@ -275,10 +263,8 @@ public class DepotrWorlds_v2 extends LinearOpMode {
     private void straight(double dist, double power) {
         resetAngle();
         robot.sleep(0.1);
-
         // int currentLeftEnc  = leftFront.getCurrentPosition();    ////
         int currentBackLeftEnc = robot.leftRear.getCurrentPosition();
-
         // int targetLeftEnc  = currentLeftEnc + calcPPR(dist);  ////
         int targetBackLeftEnc = currentBackLeftEnc + calcPPR(dist);
 
@@ -300,7 +286,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
 
         robot.sleep(0.1);
     }
-
 
     private void straightback(double dist, double power) {
         resetAngle();
@@ -331,7 +316,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
         robot.sleep(0.1);
     }
 
-
     private void strafe(double dist, double power) {// negative is left and positive is right
         resetAngle();
         robot.sleep(0.1);
@@ -340,23 +324,13 @@ public class DepotrWorlds_v2 extends LinearOpMode {
         if (power < 0){
             sign = -1;
         }
-
         //   int currentLeftEnc  = leftFront.getCurrentPosition();
         int currentBackLeftEnc = Math.abs(robot.leftRear.getCurrentPosition());
-
         // int targetLeftEnc  = currentLeftEnc + calcPPR(dist);
         int difference = Math.abs(calcPPR(dist));
         int targetBackLeftEnc = currentBackLeftEnc + difference;
 
-//            pidEncoder.reset();
-//            pidEncoder.setSetpoint(targetBackLeftEnc);
-//            pidEncoder.setInputRange(currentBackLeftEnc, targetBackLeftEnc);
-//            pidEncoder.setOutputRange(.50, power);
-//            pidEncoder.setTolerance(2);
-//            pidEncoder.enable();
-
         do {
-//                power = pidEncoder.performPID(currentBackLeftEnc);
             correction = checkDirection();
             robot.leftFront.setPower(-power);
             robot.rightFront.setPower(-power);
@@ -370,11 +344,9 @@ public class DepotrWorlds_v2 extends LinearOpMode {
             telemetry.addData("5 strafe", dist);
             telemetry.update();
         } while (opModeIsActive() && currentBackLeftEnc < targetBackLeftEnc);
-
         // power down and pause
         robot.sleep(0.1);
     }
-
     /**
      * Rotate left or right the number of degrees. Does not support turning more than 180 degrees.
      * @param degrees Degrees to turn, + is left - is right
@@ -382,7 +354,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
     private void rotate(int degrees, double power) { // negative power on right and positive power on left
         // restart imu angle tracking.
         resetAngle();
-
         // start pid controller. PID controller will monitor the turn angle with respect to the
         // target angle and reduce power as we approach the target angle with a minimum of 20%.
         // This is to prevent the robots momentum from overshooting the turn after we turn off the
@@ -392,19 +363,15 @@ public class DepotrWorlds_v2 extends LinearOpMode {
         // complete the turn. Note: if the gap between the starting power and the stall (minimum)
         // power is small, overshoot may still occur. Overshoot is dependant on the motor and
         // gearing configuration, starting power, weight of the robot and the on target tolerance.
-
         pidRotate.reset();
         pidRotate.setSetpoint(degrees);
         pidRotate.setInputRange(0, Math.abs(degrees));
         pidRotate.setOutputRange(0.35, power);
         pidRotate.setTolerance(2);
         pidRotate.enable();
-
         // getAngle() returns + when rotating counter clockwise (left) and - when rotating
         // clockwise (right).
-
         // rotate until turn is completed.
-
         if (degrees < 0)
         {
             // On right turn we have to get off zero first.
@@ -416,7 +383,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
                 robot.rightRear.setPower(power);
                 sleep(1000);
             }
-
             do
             {
                 power = pidRotate.performPID(getAngle());
@@ -444,15 +410,11 @@ public class DepotrWorlds_v2 extends LinearOpMode {
                 telemetry.addData("3 Rotate target:", degrees);
                 telemetry.update();
             } while (opModeIsActive() && !pidRotate.onTarget());
-
         // power down & wait for rotation to stop.
         robot.sleep(0.5);
-
         // reset angle tracking on new heading.
         resetAngle();
     }
-
-
     // PID controller courtesy of Peter Tischler, with modifications.
     public class PIDController
     {
@@ -472,7 +434,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
         private double m_setpoint = 0.0;
         private double m_error = 0.0;
         private double m_result = 0.0;
-
         /**
          * Allocate a PID object with the given constants for P, I, D
          * @param Kp the proportional coefficient
@@ -485,7 +446,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
             m_I = Ki;
             m_D = Kd;
         }
-
         /**
          * Read the input, calculate the output accordingly, and write to the output.
          * This should only be called by the PIDTask
@@ -512,10 +472,8 @@ public class DepotrWorlds_v2 extends LinearOpMode {
                             m_error = m_error + m_maximumInput - m_minimumInput;
                     }
                 }
-
                 // Integrate the errors as long as the upcoming integrator does
                 // not exceed the minimum and maximum output thresholds.
-
                 if ((Math.abs(m_totalError + m_error) * m_I < m_maximumOutput) &&
                         (Math.abs(m_totalError + m_error) * m_I > m_minimumOutput))
                     m_totalError += m_error;
@@ -527,7 +485,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
                 m_prevError = m_error;
 
                 if (m_result < 0) sign = -1;    // Record sign of result.
-
                 // Make sure the final result is within bounds. If we constrain the result, we make
                 // sure the sign of the constrained result matches the original result sign.
                 if (Math.abs(m_result) > m_maximumOutput)
@@ -536,7 +493,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
                     m_result = m_minimumOutput * sign;
             }
         }
-
         /**
          * Set the PID Controller gain parameters.
          * Set the proportional, integral, and differential coefficients.
@@ -550,7 +506,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
             m_I = i;
             m_D = d;
         }
-
         /**
          * Get the Proportional coefficient
          * @return proportional coefficient
@@ -558,7 +513,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
         public double getP() {
             return m_P;
         }
-
         /**
          * Get the Integral coefficient
          * @return integral coefficient
@@ -566,7 +520,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
         public double getI() {
             return m_I;
         }
-
         /**
          * Get the Differential coefficient
          * @return differential coefficient
@@ -574,7 +527,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
         public double getD() {
             return m_D;
         }
-
         /**
          * Return the current PID result for the last input set with setInput().
          * This is always centered on zero and constrained the the max and min outs
@@ -585,7 +537,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
             calculate();
             return m_result;
         }
-
         /**
          * Return the current PID result for the specified input.
          * @param input The input value to be used to calculate the PID result.
@@ -597,7 +548,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
             setInput(input);
             return performPID();
         }
-
         /**
          *  Set the PID controller to consider the input to be continuous,
          *  Rather then using the max and min in as constraints, it considers them to
@@ -608,7 +558,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
         public void setContinuous(boolean continuous) {
             m_continuous = continuous;
         }
-
         /**
          *  Set the PID controller to consider the input to be continuous,
          *  Rather then using the max and min in as constraints, it considers them to
@@ -618,7 +567,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
         public void setContinuous() {
             this.setContinuous(true);
         }
-
         /**
          * Sets the maximum and minimum values expected from the input.
          * @param minimumInput the minimum value expected from the input, always positive
@@ -630,7 +578,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
             m_maximumInput = Math.abs(maximumInput);
             setSetpoint(m_setpoint);
         }
-
         /**
          * Sets the minimum and maximum values to write.
          * @param minimumOutput the minimum value to write to the output, always positive
@@ -641,7 +588,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
             m_minimumOutput = Math.abs(minimumOutput);
             m_maximumOutput = Math.abs(maximumOutput);
         }
-
         /**
          * Set the setpoint for the PIDController
          * @param setpoint the desired setpoint
@@ -664,7 +610,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
             else
                 m_setpoint = setpoint;
         }
-
         /**
          * Returns the current setpoint of the PIDController
          * @return the current setpoint
@@ -672,7 +617,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
         public double getSetpoint() {
             return m_setpoint;
         }
-
         /**
          * Retruns the current difference of the input from the setpoint
          * @return the current error
@@ -680,7 +624,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
         public synchronized double getError() {
             return m_error;
         }
-
         /**
          * Set the percentage error which is considered tolerable for use with
          * OnTarget. (Input of 15.0 = 15 percent)
@@ -689,7 +632,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
         public void setTolerance(double percent) {
             m_tolerance = percent;
         }
-
         /**
          * Return true if the error is within the percentage of the total input range,
          * determined by setTolerance. This assumes that the maximum and minimum input
@@ -700,21 +642,18 @@ public class DepotrWorlds_v2 extends LinearOpMode {
         {
             return (Math.abs(m_error) < Math.abs(m_tolerance / 100 * (m_maximumInput - m_minimumInput)));
         }
-
         /**
          * Begin running the PIDController
          */
         public void enable() {
             m_enabled = true;
         }
-
         /**
          * Stop running the PIDController.
          */
         public void disable() {
             m_enabled = false;
         }
-
         /**
          * Reset the previous error,, the integral term, and disable the controller.
          */
@@ -725,7 +664,6 @@ public class DepotrWorlds_v2 extends LinearOpMode {
             m_totalError = 0;
             m_result = 0;
         }
-
         /**
          * Set the input value to be used by the next call to performPID().
          * @param input Input value to the PID calculation.

@@ -1,4 +1,3 @@
-
 package org.firstinspires.ftc.teamcode;
 
 import android.media.MediaPlayer;
@@ -6,13 +5,11 @@ import android.media.MediaPlayer;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-
-@TeleOp(name="Omni2019_tube", group="Pushbot")
-public class Omni2019_tube extends OpMode{
+@TeleOp(name="TELEOP", group="Pushbot")
+public class TELEOP extends OpMode{
 
     HardwareOmni robot       = new HardwareOmni();
     MediaPlayer mediaPlayer;
-
 
     @Override
     public void init() {
@@ -26,28 +23,22 @@ public class Omni2019_tube extends OpMode{
     }
     double position = .6;
 
-
     @Override
     public void start() {
-
     }
     String AA;
     @Override
     public void loop() {
 
-
         if(gamepad1.back && gamepad1.x){
             mediaPlayer.start();
         }
-
         if(gamepad1.back && gamepad1.y){
             mediaPlayer.pause();
         }
-
         if(gamepad1.back && gamepad1.a){
             mediaPlayer.seekTo(0);
         }
-
         if(gamepad1.back && gamepad1.b){
             mediaPlayer.seekTo(31600);
             mediaPlayer.start();
@@ -62,14 +53,11 @@ public class Omni2019_tube extends OpMode{
             mediaPlayer.setVolume(0,0);
         }
 
-
-
         double leftx = gamepad1.left_stick_x;
         double lefty = gamepad1.left_stick_y;
         double rightx = gamepad1.right_stick_x;
         double righty = gamepad1.right_stick_y;
-        double slide = gamepad2.left_stick_y * .75;
-
+        double slide = -gamepad2.left_stick_y * .75;
 
         if(gamepad1.left_stick_y < 0){                      //backward
             robot.leftFront.setPower(-lefty); //+
@@ -119,9 +107,9 @@ public class Omni2019_tube extends OpMode{
         }
 
         if(gamepad2.right_bumper){                          //sweep in
-            robot.sweeper.setPower(-1);
-        }else if(gamepad2.left_bumper){                     //sweep out
             robot.sweeper.setPower(1);
+        }else if(gamepad2.left_bumper){                     //sweep out
+            robot.sweeper.setPower(-1);
         }else{                                              //stop
             robot.sweeper.setPower(0);
         }
@@ -141,8 +129,6 @@ public class Omni2019_tube extends OpMode{
 
         }
 
-
-
         if(gamepad2.x){                                     //pop
             robot.popper.setPower(-1);
         }else if(gamepad2.a){                               //opposite pop
@@ -150,8 +136,6 @@ public class Omni2019_tube extends OpMode{
         }else{                                              //stop
             robot.popper.setPower(0);
         }
-
-
 
         if(gamepad1.right_bumper){                               //lift up
             robot.lift.setPower(-1);
@@ -161,13 +145,10 @@ public class Omni2019_tube extends OpMode{
             robot.lift.setPower(0);
         }
 
-
         telemetry.addData("lefty",  "%.2f", lefty);
         telemetry.addData("leftx", "%.2f", leftx);
         telemetry.addData("rightx", "%.2f", rightx);
         telemetry.addData("", AA);
-
-
     }
 
     @Override

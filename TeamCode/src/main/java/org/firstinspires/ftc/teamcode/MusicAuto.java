@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous(name="Music Auto", group="Pushbot")
-//@Disabled
+@Disabled
 public class MusicAuto extends LinearOpMode {
 
 

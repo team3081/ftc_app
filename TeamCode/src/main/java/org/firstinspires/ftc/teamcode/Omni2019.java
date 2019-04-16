@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 
 import com.qualcomm.ftccommon.SoundPlayer;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
@@ -16,6 +17,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
 @TeleOp(name="Omni2019", group="Pushbot")
+@Disabled
 public class Omni2019 extends OpMode{
 
     HardwareOmni robot       = new HardwareOmni();
