@@ -203,6 +203,15 @@ public class HardwareOmni
         }
     }
 
+
+    public void reversestartauto(Double time){
+        ElapsedTime runtime = new ElapsedTime();
+        while (runtime.seconds() < time){
+            lift.setPower(1);
+            //tube.setPosition(.41);
+        }
+    }
+
     public void drop(Double time){
         ElapsedTime runtime = new ElapsedTime();
         while (runtime.seconds() < time){

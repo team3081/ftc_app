@@ -5,8 +5,8 @@ import android.media.MediaPlayer;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-@TeleOp(name="TELEOP", group="Pushbot")
-public class TELEOP extends OpMode{
+@TeleOp(name="TELEOP V2", group="Pushbot")
+public class TELEOP_V2 extends OpMode{
 
     HardwareOmni robot       = new HardwareOmni();
     MediaPlayer mediaPlayer;
@@ -59,23 +59,28 @@ public class TELEOP extends OpMode{
         double righty = gamepad1.right_stick_y;
         double slide = -gamepad2.left_stick_y * .75;
 
-        if(gamepad1.left_stick_y < 0){                      //backward
+        if (leftx != 0){
+            lefty = 0;
+        }
+
+
+        if(lefty < 0){                      //backward
             robot.leftFront.setPower(-lefty); //+
             robot.rightFront.setPower(lefty); //-
             robot.leftRear.setPower(-lefty); //+
             robot.rightRear.setPower(lefty); //-
-        }else if(gamepad1.left_stick_y > 0) {               //forward
+        }else if(lefty > 0) {               //forward
             robot.leftFront.setPower(-lefty); //-
             robot.rightFront.setPower(lefty); //+
             robot.leftRear.setPower(-lefty); //-
             robot.rightRear.setPower(lefty); //+
-        }else if(gamepad1.left_stick_x > 0){//strafe right
+        }else if(leftx > 0){//strafe right
             lefty = 0;
             robot.leftFront.setPower(leftx);//+
             robot.rightFront.setPower(leftx);//+
             robot.leftRear.setPower(-leftx);//-
             robot.rightRear.setPower(-leftx);//-
-        }else if(gamepad1.left_stick_x < 0) {               //strafe left
+        }else if(leftx < 0) {               //strafe left
             lefty = 0;
             robot.leftFront.setPower(leftx);//-
             robot.rightFront.setPower(leftx);//-

@@ -8,17 +8,16 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.vuforia.RotationalDeviceTracker;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@Autonomous(name = "Depot Worlds_v2", group = "Exercises")
+@Autonomous(name = "Depot Worlds_v3", group = "Exercises")
 //@Disabled
 
-public class DepotrWorlds_v2 extends LinearOpMode {
+public class DepotrWorlds_v3 extends LinearOpMode {
 
     static final double DRIVEPOWER   =  .8;
     static final double TURNPOWER    =  .8;
@@ -117,7 +116,7 @@ public class DepotrWorlds_v2 extends LinearOpMode {
             telemetry.addData("Gold Position: ", GoldPos);
             telemetry.update();
 
-       robot.startauto(1.35);
+       robot.startauto(1.3);
             robot.sleep(0.5);
         straightback(-1,-1);
             robot.sleep(1.0);
@@ -127,8 +126,17 @@ public class DepotrWorlds_v2 extends LinearOpMode {
             robot.sleep(1.0);
 
             if (GoldPos == 3) { //ROLLED LEFT, RIGHT OF BOT
-                rotate(50,TURNPOWER);
+                rotatetwo(50,TURNPOWER);
                 robot.sleep(0.100);
+
+                while(getAngle() <5){
+                    straightback(-1,-1);
+                    robot.sleep(1.0);
+                    strafe(.35 *WHEEL_CIRCUM, DRIVEPOWER);
+                    robot.sleep(.05);
+                    rotatetwo(50, TURNPOWER);
+                }
+
                 straight(90, DRIVEPOWER);
                 robot.sleep(0.100);
                 rotate(90,TURNPOWER);
@@ -149,7 +157,17 @@ public class DepotrWorlds_v2 extends LinearOpMode {
             } else if (GoldPos == 2){ //ROLLED CENTER, CENTER OF BOT
                 rotate(90, TURNPOWER);
                 robot.sleep(0.05);
-                straight(70, DRIVEPOWER);
+
+                while(getAngle() <5){
+                    straightback(-1,-1);
+                    robot.sleep(1.0);
+                    strafe(.35 *WHEEL_CIRCUM, DRIVEPOWER);
+                    robot.sleep(.05);
+                    rotate(90, TURNPOWER);
+                    robot.sleep(.05);
+                }
+
+                straight(80, DRIVEPOWER);
                 robot.sleep(.05);
                 robot.drop(1.0);
                 robot.sleep(0.05);
@@ -167,10 +185,20 @@ public class DepotrWorlds_v2 extends LinearOpMode {
             } else if (GoldPos == 1) { //ROLLED RIGHT, LEFT OF BOT
                 rotate(85, TURNPOWER);
                 rotate(30,TURNPOWER);
+                while(getAngle() <5){
+                    straightback(-1,-1);
+                    robot.sleep(1.0);
+                    strafe(.35 *WHEEL_CIRCUM, DRIVEPOWER);
+                    robot.sleep(.05);
+                    rotate(85, TURNPOWER);
+                    rotate(30, TURNPOWER);
+                    robot.sleep(.05);
+                }
+
                 robot.sleep(0.05);
                 straight(3.4 * WHEEL_CIRCUM, DRIVEPOWER);
                 robot.sleep(0.05);
-                rotate(5, TURNPOWER);
+               // rotate(5, TURNPOWER);
                 robot.sleep(.05);
                 strafe(0.15*WHEEL_CIRCUM, -DRIVEPOWER);
                 robot.drop(1.0);
@@ -354,6 +382,8 @@ public class DepotrWorlds_v2 extends LinearOpMode {
     private void rotate(int degrees, double power) { // negative power on right and positive power on left
         // restart imu angle tracking.
         resetAngle();
+        runtime.reset();
+
         // start pid controller. PID controller will monitor the turn angle with respect to the
         // target angle and reduce power as we approach the target angle with a minimum of 20%.
         // This is to prevent the robots momentum from overshooting the turn after we turn off the
@@ -395,7 +425,7 @@ public class DepotrWorlds_v2 extends LinearOpMode {
                 telemetry.addData("3 Rotate target:", degrees);
                 telemetry.update();
 
-            } while (opModeIsActive() && !pidRotate.onTarget());
+            } while (opModeIsActive() && !pidRotate.onTarget() && runtime.seconds() < 5);
         }
         else    // left turn.
             do
@@ -409,12 +439,83 @@ public class DepotrWorlds_v2 extends LinearOpMode {
                 telemetry.addData("2 current angle:", getAngle());
                 telemetry.addData("3 Rotate target:", degrees);
                 telemetry.update();
-            } while (opModeIsActive() && !pidRotate.onTarget());
+            } while (opModeIsActive() && !pidRotate.onTarget() && runtime.seconds() < 5);
         // power down & wait for rotation to stop.
         robot.sleep(0.5);
         // reset angle tracking on new heading.
         resetAngle();
     }
+
+
+    private void rotatetwo(int degrees, double power) { // negative power on right and positive power on left
+        // restart imu angle tracking.
+        resetAngle();
+        runtime.reset();
+
+        // start pid controller. PID controller will monitor the turn angle with respect to the
+        // target angle and reduce power as we approach the target angle with a minimum of 20%.
+        // This is to prevent the robots momentum from overshooting the turn after we turn off the
+        // power. The PID controller reports onTarget() = true when the difference between turn
+        // angle and target angle is within 2% of target (tolerance). This helps prevent overshoot.
+        // The minimum power is determined by testing and must enough to prevent motor stall and
+        // complete the turn. Note: if the gap between the starting power and the stall (minimum)
+        // power is small, overshoot may still occur. Overshoot is dependant on the motor and
+        // gearing configuration, starting power, weight of the robot and the on target tolerance.
+        pidRotate.reset();
+        pidRotate.setSetpoint(degrees);
+        pidRotate.setInputRange(0, Math.abs(degrees));
+        pidRotate.setOutputRange(0.35, power);
+        pidRotate.setTolerance(2);
+        pidRotate.enable();
+        // getAngle() returns + when rotating counter clockwise (left) and - when rotating
+        // clockwise (right).
+        // rotate until turn is completed.
+        if (degrees < 0)
+        {
+            // On right turn we have to get off zero first.
+            while (opModeIsActive() && getAngle() == 0)
+            {
+                robot.leftFront.setPower(power);
+                robot.rightFront.setPower(power);
+                robot.leftRear.setPower(power);
+                robot.rightRear.setPower(power);
+                sleep(1000);
+            }
+            do
+            {
+                power = pidRotate.performPID(getAngle());
+                robot.leftFront.setPower(power);
+                robot.rightFront.setPower(power);
+                robot.leftRear.setPower(power);
+                robot.rightRear.setPower(power);
+                telemetry.addData("1 PID     power:", power);
+                telemetry.addData("2 current angle:", getAngle());
+                telemetry.addData("3 Rotate target:", degrees);
+                telemetry.update();
+
+            } while (opModeIsActive() && !pidRotate.onTarget() && runtime.seconds() < 5);
+        }
+        else    // left turn.
+            do
+            {
+                power = pidRotate.performPID(getAngle());
+                robot.leftFront.setPower(-power);
+                robot.rightFront.setPower(-power);
+                robot.leftRear.setPower(-power);
+                robot.rightRear.setPower(-power);
+                telemetry.addData("1 PID     power:", power);
+                telemetry.addData("2 current angle:", getAngle());
+                telemetry.addData("3 Rotate target:", degrees);
+                telemetry.update();
+            } while (opModeIsActive() && !pidRotate.onTarget() && runtime.seconds() < 5);
+        // power down & wait for rotation to stop.
+        robot.sleep(0.5);
+        // reset angle tracking on new heading.
+//        resetAngle();
+    }
+
+
+
     // PID controller courtesy of Peter Tischler, with modifications.
     public class PIDController
     {

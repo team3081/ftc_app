@@ -15,10 +15,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@Autonomous(name = "Depot Worlds_v2", group = "Exercises")
+@Autonomous(name = "Depot Worlds_v4", group = "Exercises")
 //@Disabled
 
-public class DepotrWorlds_v2 extends LinearOpMode {
+public class DepotrWorlds_v4 extends LinearOpMode {
 
     static final double DRIVEPOWER   =  .8;
     static final double TURNPOWER    =  .8;
@@ -117,13 +117,15 @@ public class DepotrWorlds_v2 extends LinearOpMode {
             telemetry.addData("Gold Position: ", GoldPos);
             telemetry.update();
 
-       robot.startauto(1.35);
+            robot.startauto(1.35);
             robot.sleep(0.5);
-        straightback(-1,-1);
+            robot.reversestartauto(.07);
+            robot.sleep(.05);
+            straightback(-1,-1);
             robot.sleep(1.0);
-        strafe(0.35 * WHEEL_CIRCUM, DRIVEPOWER); // left
+            strafe(0.35 * WHEEL_CIRCUM, DRIVEPOWER); // left
             robot.sleep(1.0);
-        straight(+1 , DRIVEPOWER);
+            straight(+1 , DRIVEPOWER);
             robot.sleep(1.0);
 
             if (GoldPos == 3) { //ROLLED LEFT, RIGHT OF BOT
